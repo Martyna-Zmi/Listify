@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="listify-data" />
+        <module name="listify-web-Api" />
+        <module name="listify-front" />
+        <module name="listify-updater" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="listify-data" target="17" />
+      <module name="listify-front" target="17" />
+      <module name="listify-updater" target="17" />
+      <module name="listify-web-Api" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="listify-data" options="-parameters" />
+      <module name="listify-front" options="-parameters" />
+      <module name="listify-updater" options="-parameters" />
+      <module name="listify-web-Api" options="-parameters" />
+    </option>
+  </component>
+</project>

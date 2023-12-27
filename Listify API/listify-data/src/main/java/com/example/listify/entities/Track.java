@@ -18,7 +18,7 @@ public class Track {
     private int trackNumberOnAlbum;
     @ManyToOne(cascade = CascadeType.ALL)
     private Album album;
-    @ManyToMany(mappedBy = "tracks", cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Artist> artists;
 
     public long getId() {

@@ -16,11 +16,11 @@ public class Album {
     private String albumType;
     private int totalTracks;
     private String releaseDate;
-    @ManyToMany(mappedBy = "albums", cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Artist> artists;
     @ListToString
     private String genres;
-   @OneToMany(mappedBy = "album", cascade = CascadeType.ALL)
+   @OneToMany(cascade = CascadeType.ALL)
     private List<Image> images;
 
     public void setSpotifyId(String spotifyId) {

@@ -1,7 +1,9 @@
 package com.example.listify.mappers;
 
-import java.util.List;
+import org.springframework.stereotype.Component;
 
+import java.util.List;
+@Component
 public class ConvertList<T> implements IConvertList{
     public final List<T> toConvert;
     public ConvertList(List<T> toConvert){

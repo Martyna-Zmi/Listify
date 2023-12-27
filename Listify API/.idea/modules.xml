@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Listify API.iml" filepath="$PROJECT_DIR$/.idea/Listify API.iml" />
+      <module fileurl="file://$PROJECT_DIR$/listify-data/listify-data.iml" filepath="$PROJECT_DIR$/listify-data/listify-data.iml" />
+      <module fileurl="file://$PROJECT_DIR$/listify-front/listify-front.iml" filepath="$PROJECT_DIR$/listify-front/listify-front.iml" />
+      <module fileurl="file://$PROJECT_DIR$/listify-updater/listify-updater.iml" filepath="$PROJECT_DIR$/listify-updater/listify-updater.iml" />
+      <module fileurl="file://$PROJECT_DIR$/listify-web-Api/listify-web-Api.iml" filepath="$PROJECT_DIR$/listify-web-Api/listify-web-Api.iml" />
+    </modules>
+  </component>
+</project>

@@ -13,7 +13,7 @@ public class Artist {
     private String name;
     @ListToString
     private String genres;
-    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Image> images;
 
     public void setSpotifyId(String spotifyId) {
