@@ -9,7 +9,9 @@ import com.example.listify.spotifyDto.*;
 import org.eclipse.collections.impl.block.factory.HashingStrategies;
 import org.eclipse.collections.impl.utility.ListIterate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +22,9 @@ import java.util.List;
 public class Updater {
     private IRepoCatalog repoCatalog;
     private IMapper mapper;
+    private RestClient restClient = RestClient.create();
+    @Value("${spotify.hourlyKey}")
+    private String hourlyKey;
     @Autowired
     public Updater(IRepoCatalog repoCatalog, IMapper mapper){
         this.repoCatalog = repoCatalog;
@@ -27,14 +32,26 @@ public class Updater {
     }
     public void mapFound(TopTracksDtoSp searchPage, ArtistDtoSp mainArtist){
         List<TrackDtoSp> trackDtos = searchPage.getTracks();
-        //List<ArtistDtoSp> artistDtos = foundArtists;
         List<ArtistDtoSp> artistDtos = new ArrayList<>();
         searchPage.getTracks().forEach(track->artistDtos.addAll(track.getArtists()));
-        //
-        List<Artist> artistsDuplicates = artistDtos.stream().map(dto->mapper.mapArtist(dto)).toList();
-        List<Artist> artists = ListIterate.distinct(artistsDuplicates, HashingStrategies.fromFunction(Artist::getSpotifyId));
-        artists.get(0).setGenres(Arrays.toString(mainArtist.getGenres()));
-        artists.get(0).setImage(mainArtist.getImage().get(0).getUrl());
+        List<ArtistDtoSp> uniqueArtists = ListIterate.distinct(artistDtos, HashingStrategies.fromFunction(ArtistDtoSp::getSpotifyId));
+        List<Artist> artists = new ArrayList<>();
+        for (ArtistDtoSp dto:
+             uniqueArtists) {
+            var fullArtistDto = restClient.get()
+                    .uri("https://api.spotify.com/v1/artists/"+dto.getSpotifyId())
+                    .header("Authorization", "Bearer " + hourlyKey)
+                    .retrieve()
+                    .body(ArtistDtoSp.class);
+            artists.add(mapper.mapArtist(fullArtistDto));
+        }
+        //List<Artist> artistsDuplicates = artistDtos.stream().map(dto->mapper.mapArtist(dto)).toList();
+        //List<Artist> artists = ListIterate.distinct(artistsDuplicates, HashingStrategies.fromFunction(Artist::getSpotifyId));
+
+
+        //artists.get(0).setGenres(Arrays.toString(mainArtist.getGenres()));
+        //artists.get(0).setImage(mainArtist.getImage().get(0).getUrl());
+
         List<Album> albumsDuplicates = trackDtos.stream().map(dto->mapper.mapAlbum(dto.getAlbum())).toList();
         List<Album> albums = ListIterate.distinct(albumsDuplicates, HashingStrategies.fromFunction(Album::getSpotifyId));
         List<Track> tracks = trackDtos.stream().map(dto->mapper.mapTrack(dto)).toList();
@@ -45,7 +62,6 @@ public class Updater {
 
         for(int i=0; i<trackDtos.size(); i++){ // album -> tracks & track -> album
             String id = trackDtos.get(i).getAlbum().getSpotifyId();
-            //repoCatalog.getTrackRepository().save(tracks.get(i));
             Album tempAlbum = albums.stream().filter(album -> id.equals(album.getSpotifyId())).findFirst().orElse(null);
             tracks.get(i).setAlbum(tempAlbum);
             if(tempAlbum.getTracks()==null){
@@ -55,21 +71,6 @@ public class Updater {
             var tempTracks = new ArrayList<>(tempAlbum.getTracks());
             tempTracks.add(tracks.get(i));
             tempAlbum.setTracks(tempTracks);
-            //repoCatalog.getAlbumRepository().save(tempAlbum);
-            if(tempAlbum.getArtists()==null){ //album -> artist & artist -> albums
-                var placeholderArtist = new ArrayList<Artist>();
-                tempAlbum.setArtists(placeholderArtist);
-            }
-            var tempArtists = new ArrayList<Artist>(tempAlbum.getArtists());
-            tempArtists.add(artists.get(0));
-            tempAlbum.setArtists(tempArtists);
-            if(artists.get(0).getAlbums()==null){
-                var placeholderAlbums = new ArrayList<Album>();
-                artists.get(0).setAlbums(placeholderAlbums);
-            }
-            var tempAlbums = artists.get(0).getAlbums();
-            tempAlbums.add(tracks.get(i).getAlbum());
-            artists.get(0).setAlbums(tempAlbums);
         }
         for(int i=0; i<trackDtos.size(); i++){ //track -> artists, artist-> tracks
             final Track track = tracks.get(i);

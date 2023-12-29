@@ -1,15 +1,10 @@
 package com.example.listify.entities;
 
 import jakarta.persistence.*;
-
-
 import java.util.List;
 
 @Entity
 public class Album {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private long albumId;
     @Id
     @Column(name = "Album_id")
     private String spotifyId;
@@ -17,10 +12,7 @@ public class Album {
     private String albumType;
     private int totalTracks;
     private String releaseDate;
-    @ManyToMany(mappedBy = "albums",cascade = CascadeType.ALL)
-    private List<Artist> artists;
     private String image;
-    //@OneToMany(mappedBy = "album",cascade = CascadeType.ALL)
     @OneToMany(mappedBy = "album")
     private List<Track> tracks;
 
@@ -36,9 +28,6 @@ public class Album {
     public void setAlbumType(String albumType) {
         this.albumType = albumType;
     }
-    public void setArtists(List<Artist> artists) {
-        this.artists = artists;
-    }
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
@@ -53,9 +42,6 @@ public class Album {
     }
     public int getTotalTracks() {
         return totalTracks;
-    }
-    public List<Artist> getArtists() {
-        return artists;
     }
     public String getAlbumType() {
         return albumType;
@@ -75,10 +61,4 @@ public class Album {
     public void setImage(String image) {
         this.image = image;
     }
-//    public void setAlbumId(long albumId) {
-//        this.albumId = albumId;
-//    }
-//    public long getAlbumId() {
-//        return albumId;
-//    }
 }

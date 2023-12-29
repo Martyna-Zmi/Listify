@@ -11,5 +11,4 @@ public interface IMapper{
     Artist mapArtist(ArtistDtoSp dto);
     Album mapAlbum(AlbumDtoSp dto);
     Track mapTrack(TrackDtoSp dto);
-
 }

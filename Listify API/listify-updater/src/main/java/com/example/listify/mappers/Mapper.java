@@ -6,20 +6,16 @@ import com.example.listify.entities.Track;
 import com.example.listify.spotifyDto.AlbumDtoSp;
 import com.example.listify.spotifyDto.ArtistDtoSp;
 import com.example.listify.spotifyDto.TrackDtoSp;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
+@NoArgsConstructor
 @Component
 public class Mapper implements IMapper {
-    private final IConvertList listConverter;
 
-    @Autowired
-    public Mapper(IConvertList listConverter){
-        this.listConverter = listConverter;
-    }
     @Override
     public Artist mapArtist(ArtistDtoSp dto) {
         var artist = new Artist();
@@ -27,8 +23,12 @@ public class Mapper implements IMapper {
         if(dto.getImage()!=null){
             artist.setImage(dto.getImage().get(0).getUrl());
         }
-        artist.setGenres(Arrays.toString(dto.getGenres()));
+        String genres = Arrays.toString(dto.getGenres()).replace(" ","")
+                       .replace("[","")
+                       .replace("]","");
+        artist.setGenres(genres);
         artist.setSpotifyId(dto.getSpotifyId());
+        artist.setImage(dto.getImage().get(0).getUrl());
         return artist;
     }
     @Override

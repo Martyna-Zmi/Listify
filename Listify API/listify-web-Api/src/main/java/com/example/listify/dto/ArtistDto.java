@@ -1,8 +1,13 @@
 package com.example.listify.dto;
 
+import lombok.Data;
+
+import java.util.List;
+
+@Data
 public class ArtistDto {
-    private long id;
     private String spotifyId;
     private String name;
-    private String genres;
+    private List<String> genres;
+    private String image;
 }

@@ -6,24 +6,12 @@ import java.util.List;
 
 @Entity
 public class Artist {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private long artistId;
     @Id
     @Column(name = "Artist_id")
     private String spotifyId;
     private String name;
-    // @ListToString
     private String genres;
-    //@ImageToURL
     private String image;
-    //@CustomMapping
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "album_artist",
-            joinColumns = { @JoinColumn(name = "JT2_artist_id") },
-            inverseJoinColumns = { @JoinColumn(name = "JT2_album_id") })
-    private List<Album> albums;
-    //@CustomMapping
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "track_artist",
             joinColumns = { @JoinColumn(name = "JT1_artist_id") },
@@ -48,12 +36,6 @@ public class Artist {
     public String getName() {
         return name;
     }
-    public void setAlbums(List<Album> albums) {
-        this.albums = albums;
-    }
-    public List<Album> getAlbums() {
-        return albums;
-    }
     public String getImage() {
         return image;
     }
@@ -66,10 +48,4 @@ public class Artist {
     public void setTracks(List<Track> tracks) {
         this.tracks = tracks;
     }
-//    public long getArtistId() {
-//        return artistId;
-//    }
-//    public void setArtistId(long artistId) {
-//        this.artistId = artistId;
-//    }
 }
