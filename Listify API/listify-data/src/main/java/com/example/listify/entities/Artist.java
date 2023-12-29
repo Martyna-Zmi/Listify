@@ -6,26 +6,28 @@ import java.util.List;
 
 @Entity
 public class Artist {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private long artistId;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "Artist_id")
     private String spotifyId;
     private String name;
-   // @ListToString
+    // @ListToString
     private String genres;
     //@ImageToURL
     private String image;
     //@CustomMapping
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "album_artist",
-            joinColumns = { @JoinColumn(name = "Artist_id") },
-            inverseJoinColumns = { @JoinColumn(name = "Album_id") })
+            joinColumns = { @JoinColumn(name = "JT2_artist_id") },
+            inverseJoinColumns = { @JoinColumn(name = "JT2_album_id") })
     private List<Album> albums;
     //@CustomMapping
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "track_artist",
-            joinColumns = { @JoinColumn(name = "Artist_id") },
-            inverseJoinColumns = { @JoinColumn(name = "track_id") })
+            joinColumns = { @JoinColumn(name = "JT1_artist_id") },
+            inverseJoinColumns = { @JoinColumn(name = "JT1_track_id") })
     private List<Track> tracks;
 
     public void setSpotifyId(String spotifyId) {
@@ -37,9 +39,6 @@ public class Artist {
     public void setName(String name) {
         this.name = name;
     }
-    public void setId(long id) {
-        this.id = id;
-    }
     public String getSpotifyId() {
         return spotifyId;
     }
@@ -48,9 +47,6 @@ public class Artist {
     }
     public String getName() {
         return name;
-    }
-    public long getId() {
-        return id;
     }
     public void setAlbums(List<Album> albums) {
         this.albums = albums;
@@ -70,5 +66,10 @@ public class Artist {
     public void setTracks(List<Track> tracks) {
         this.tracks = tracks;
     }
-
+//    public long getArtistId() {
+//        return artistId;
+//    }
+//    public void setArtistId(long artistId) {
+//        this.artistId = artistId;
+//    }
 }

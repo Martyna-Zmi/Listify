@@ -82,6 +82,9 @@
     <orderEntry type="library" scope="RUNTIME" name="Maven: jakarta.inject:jakarta.inject-api:2.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.antlr:antlr4-runtime:4.13.0" level="project" />
     <orderEntry type="library" name="Maven: com.mysql:mysql-connector-j:8.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.collections:eclipse-collections:8.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.eclipse.collections:eclipse-collections-api:8.2.0" level="project" />
+    <orderEntry type="library" name="Maven: net.jcip:jcip-annotations:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.30" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework.boot:spring-boot-starter-test:3.2.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:3.2.1" level="project" />

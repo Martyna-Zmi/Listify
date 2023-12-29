@@ -21,4 +21,6 @@ public class TrackDtoSp {
     private AlbumDtoSp album;
     @JsonProperty("track_number")
     private int trackNumberOnAlbum;
+    @JsonProperty("artists")
+    private List<ArtistDtoSp> artists;
 }

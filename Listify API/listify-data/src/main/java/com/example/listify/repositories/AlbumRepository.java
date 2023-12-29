@@ -9,6 +9,6 @@ import java.util.Optional;
 
 @Component
 @Repository
-public interface AlbumRepository extends JpaRepository<Album, Long> {
-    Optional<Album> getAlbumBySpotifyId(String spotifyId);
+public interface AlbumRepository extends JpaRepository<Album, String> {
+
 }

@@ -5,24 +5,27 @@ import java.util.List;
 
 @Entity
 public class Track {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private long trackId;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "Track_id")
     private String spotifyId;
     private String name;
     int durationMs;
     boolean isExplicit;
     private String spotifyUrl;
-    //@CustomMapping
-    @ManyToOne(cascade = CascadeType.ALL)
+    //@ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
+    @JoinColumn(name = "album")
     private Album album;
     //@CustomMapping
     @ManyToMany(mappedBy = "tracks",cascade = CascadeType.ALL)
     private List<Artist> artists;
 
-    public long getId() {
-        return id;
-    }
+//    public long getTrackId() {
+//        return trackId;
+//    }
     public String getName() {
         return name;
     }
@@ -35,9 +38,9 @@ public class Track {
     public String getSpotifyUrl() {
         return spotifyUrl;
     }
-    public void setId(long id) {
-        this.id = id;
-    }
+//    public void setTrackId(long trackId) {
+//        this.trackId = trackId;
+//    }
     public void setName(String name) {
         this.name = name;
     }

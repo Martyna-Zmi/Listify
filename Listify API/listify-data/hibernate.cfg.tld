@@ -21,6 +21,5 @@
         <mapping class="com.example.listify.entities.Album"/>
         <mapping class="com.example.listify.entities.Artist"/>
         <mapping class="com.example.listify.entities.Track"/>
-        <mapping class="com.example.listify.entities.Image"/>
     </session-factory>
 </hibernate-configuration>

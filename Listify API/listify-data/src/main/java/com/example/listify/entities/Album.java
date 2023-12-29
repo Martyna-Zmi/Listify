@@ -7,31 +7,28 @@ import java.util.List;
 
 @Entity
 public class Album {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private long albumId;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(name = "Album_id")
     private String spotifyId;
     private String name;
     private String albumType;
     private int totalTracks;
     private String releaseDate;
-    //@CustomMapping
     @ManyToMany(mappedBy = "albums",cascade = CascadeType.ALL)
     private List<Artist> artists;
-    //@ImageToURL
     private String image;
-    //@CustomMapping
-    @OneToMany(mappedBy = "album",cascade = CascadeType.ALL)
+    //@OneToMany(mappedBy = "album",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "album")
     private List<Track> tracks;
 
     public void addTrack(Track track){
-       this.tracks.add(track);
+        this.tracks.add(track);
     }
     public void setSpotifyId(String spotifyId) {
         this.spotifyId = spotifyId;
-    }
-    public void setId(long id) {
-        this.id = id;
     }
     public void setName(String name) {
         this.name = name;
@@ -50,9 +47,6 @@ public class Album {
     }
     public String getSpotifyId() {
         return spotifyId;
-    }
-    public long getId() {
-        return id;
     }
     public String getName() {
         return name;
@@ -81,5 +75,10 @@ public class Album {
     public void setImage(String image) {
         this.image = image;
     }
-
+//    public void setAlbumId(long albumId) {
+//        this.albumId = albumId;
+//    }
+//    public long getAlbumId() {
+//        return albumId;
+//    }
 }

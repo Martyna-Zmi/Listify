@@ -45,8 +45,8 @@ public class UpdaterController {
                 .retrieve()
                 .body(ArtistDtoSp.class);
             ArrayList<ArtistDtoSp> foundArtists = new ArrayList<>();
-            foundArtists.add(artist);
-        updaterService.mapFound(resultPage, foundArtists);
+//            foundArtists.add(artist);
+        updaterService.mapFound(resultPage, artist);
     }
 
 

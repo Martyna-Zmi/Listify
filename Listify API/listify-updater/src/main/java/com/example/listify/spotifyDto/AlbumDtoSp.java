@@ -19,4 +19,6 @@ public class AlbumDtoSp {
     private String releaseDate;
     @JsonProperty("images")
     private List<ImageDtoSp> image;
+    @JsonProperty("artists")
+    private List<SimplifiedArtistDtoSp> simpleArtists;
 }
