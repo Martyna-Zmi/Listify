@@ -1,9 +1,9 @@
 package com.example.listify.entities;
 
-import com.example.listify.annotations.ListToString;
 import jakarta.persistence.*;
 
 import java.util.List;
+
 @Entity
 public class Artist {
     @Id
@@ -11,16 +11,25 @@ public class Artist {
     private long id;
     private String spotifyId;
     private String name;
-    @ListToString
+   // @ListToString
     private String genres;
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<Image> images;
+    //@ImageToURL
+    private String image;
+    //@CustomMapping
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "album_artist",
+            joinColumns = { @JoinColumn(name = "Artist_id") },
+            inverseJoinColumns = { @JoinColumn(name = "Album_id") })
+    private List<Album> albums;
+    //@CustomMapping
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "track_artist",
+            joinColumns = { @JoinColumn(name = "Artist_id") },
+            inverseJoinColumns = { @JoinColumn(name = "track_id") })
+    private List<Track> tracks;
 
     public void setSpotifyId(String spotifyId) {
         this.spotifyId = spotifyId;
-    }
-    public void setImages(List<Image> images) {
-        this.images = images;
     }
     public void setGenres(String genres) {
         this.genres = genres;
@@ -30,9 +39,6 @@ public class Artist {
     }
     public void setId(long id) {
         this.id = id;
-    }
-    public List<Image> getImages() {
-        return images;
     }
     public String getSpotifyId() {
         return spotifyId;
@@ -46,4 +52,23 @@ public class Artist {
     public long getId() {
         return id;
     }
+    public void setAlbums(List<Album> albums) {
+        this.albums = albums;
+    }
+    public List<Album> getAlbums() {
+        return albums;
+    }
+    public String getImage() {
+        return image;
+    }
+    public void setImage(String image) {
+        this.image = image;
+    }
+    public List<Track> getTracks() {
+        return tracks;
+    }
+    public void setTracks(List<Track> tracks) {
+        this.tracks = tracks;
+    }
+
 }

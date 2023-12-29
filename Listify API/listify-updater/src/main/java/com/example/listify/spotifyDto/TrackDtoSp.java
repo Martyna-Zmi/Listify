@@ -19,8 +19,6 @@ public class TrackDtoSp {
     private String spotifyUrl;
     @JsonProperty("album")
     private AlbumDtoSp album;
-    @JsonProperty("artists")
-    private List<ArtistDtoSp> artists;
     @JsonProperty("track_number")
     private int trackNumberOnAlbum;
 }

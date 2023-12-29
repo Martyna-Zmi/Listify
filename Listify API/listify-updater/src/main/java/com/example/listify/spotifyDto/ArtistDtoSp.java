@@ -11,7 +11,9 @@ public class ArtistDtoSp {
     @JsonProperty("name")
     private String name;
     @JsonProperty("genres")
-    private List<String> genres;
+    private String[] genres;
     @JsonProperty("images")
-    private List<ImageDtoSp> images;
+    private List<ImageDtoSp> image;
+    @JsonProperty("popularity")
+    private int popularity;
 }

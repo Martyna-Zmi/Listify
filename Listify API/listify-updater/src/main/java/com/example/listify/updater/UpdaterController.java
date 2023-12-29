@@ -1,14 +1,22 @@
-package com.example.listify;
+package com.example.listify.updater;
 
+import com.example.listify.spotifyDto.ArtistDtoSp;
 import com.example.listify.spotifyDto.TopTracksDtoSp;
+import com.example.listify.spotifyDto.TrackDtoSp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestClient;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 @RestController
 public class UpdaterController {
+    private Updater updaterService;
     @Value("${spotify.clientId}")
     private String spotifyClientId;
     @Value("${spotify.clientSecret}")
@@ -18,6 +26,10 @@ public class UpdaterController {
     private TopTracksDtoSp searchPage;
     private final String URL = "https://api.spotify.com/v1/";
     private RestClient restClient = RestClient.create();
+    @Autowired
+    public UpdaterController(Updater updater){
+        this.updaterService = updater;
+    }
     @GetMapping("listify/update-data/{artistId}")
     public void updateWithTop(@PathVariable("artistId") String artistId){
         //TODO log about update
@@ -26,9 +38,16 @@ public class UpdaterController {
                 .header("Authorization", "Bearer " + hourlyKey)
                 .retrieve()
                 .body(TopTracksDtoSp.class);
-        this.searchPage = resultPage;
-        System.out.println(resultPage.getTracks().get(0).getName());
-        //TODO map to entity and save to database :)
+
+            var artist = restClient.get()
+                .uri(URL+"artists/"+artistId)
+                .header("Authorization", "Bearer " + hourlyKey)
+                .retrieve()
+                .body(ArtistDtoSp.class);
+            ArrayList<ArtistDtoSp> foundArtists = new ArrayList<>();
+            foundArtists.add(artist);
+        updaterService.mapFound(resultPage, foundArtists);
     }
+
 
 }

@@ -1,6 +1,5 @@
 package com.example.listify.entities;
 
-import com.example.listify.annotations.ListToString;
 import jakarta.persistence.*;
 
 
@@ -16,13 +15,18 @@ public class Album {
     private String albumType;
     private int totalTracks;
     private String releaseDate;
-    @ManyToMany(cascade = CascadeType.ALL)
+    //@CustomMapping
+    @ManyToMany(mappedBy = "albums",cascade = CascadeType.ALL)
     private List<Artist> artists;
-    @ListToString
-    private String genres;
-   @OneToMany(cascade = CascadeType.ALL)
-    private List<Image> images;
+    //@ImageToURL
+    private String image;
+    //@CustomMapping
+    @OneToMany(mappedBy = "album",cascade = CascadeType.ALL)
+    private List<Track> tracks;
 
+    public void addTrack(Track track){
+       this.tracks.add(track);
+    }
     public void setSpotifyId(String spotifyId) {
         this.spotifyId = spotifyId;
     }
@@ -37,12 +41,6 @@ public class Album {
     }
     public void setArtists(List<Artist> artists) {
         this.artists = artists;
-    }
-    public void setGenres(String genres) {
-        this.genres = genres;
-    }
-    public void setImages(List<Image> images) {
-        this.images = images;
     }
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
@@ -65,16 +63,23 @@ public class Album {
     public List<Artist> getArtists() {
         return artists;
     }
-    public List<Image> getImages() {
-        return images;
-    }
     public String getAlbumType() {
         return albumType;
-    }
-    public String getGenres() {
-        return genres;
     }
     public String getReleaseDate() {
         return releaseDate;
     }
+    public void setTracks(List<Track> tracks) {
+        this.tracks = tracks;
+    }
+    public List<Track> getTracks() {
+        return tracks;
+    }
+    public String getImage() {
+        return image;
+    }
+    public void setImage(String image) {
+        this.image = image;
+    }
+
 }

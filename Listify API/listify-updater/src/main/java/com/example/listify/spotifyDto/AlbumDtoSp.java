@@ -17,10 +17,6 @@ public class AlbumDtoSp {
     private int totalTracks;
     @JsonProperty("release_date")
     private String releaseDate;
-    @JsonProperty("artists")
-    private List<ArtistDtoSp> artists;
-    @JsonProperty("genres")
-    private List<String> genres;
     @JsonProperty("images")
-    private List<ImageDtoSp> images;
+    private List<ImageDtoSp> image;
 }
