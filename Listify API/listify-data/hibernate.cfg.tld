@@ -18,8 +18,8 @@
         <property name="hbm2ddl.auto">validate</property>
 
         <!-- Names the annotated entity class -->
-        <mapping class="com.example.listify.entities.Album"/>
-        <mapping class="com.example.listify.entities.Artist"/>
-        <mapping class="com.example.listify.entities.Track"/>
+        <mapping class="com.example.listifyapi.entities.Album"/>
+        <mapping class="com.example.listifyapi.entities.Artist"/>
+        <mapping class="com.example.listifyapi.entities.Track"/>
     </session-factory>
 </hibernate-configuration>
