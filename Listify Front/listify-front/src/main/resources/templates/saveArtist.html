@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Save a new Artist</title>
+    <link th:href="@{/mainView.css}" rel="stylesheet" />
+</head>
+<body>
+<h2>Add a new Artist</h2>
+<form action="#" th:action="@{/saveArtist.html}" th:object="${artist}" method="post">
+    <fieldset>
+        <legend>Info</legend>
+        <label>Id:</label>
+        <input type="text" th:field="*{spotifyId}" min="0" id="id">
+        <br>
+        <label>Name:</label>
+        <input type="text" th:field="*{name}" id="name">
+        <br>
+        <label>Genres:</label>
+        <input type="text" th:field="*{genres}" min="0" id="genres">
+        <br>
+        <label>Image link:</label>
+        <input type="text" th:field="*{image}" min="0" id="image">
+        <br>
+        <input type="submit" value="Save" id="add">
+    </fieldset>
+</form>
+</body>
+</html>

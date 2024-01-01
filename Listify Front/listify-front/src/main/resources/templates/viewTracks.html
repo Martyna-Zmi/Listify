@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All tracks</title>
+    <link th:href="@{/mainView.css}" rel="stylesheet" />
+</head>
+<body>
+<div class="content">
+    <form action="#" th:action="@{'http://localhost:8080/listify/main'}" method="get">
+        <input type="submit" value="Back to main page">
+    </form>
+    <h2 class="main-header">♫ All available songs ♫</h2>
+    <table class="table-main" border="1">
+        <thead>
+        <th>---</th>
+        <th>Name</th>
+        <th>Artists</th>
+        <th>Album</th>
+        <th>Explicit?</th>
+        </thead>
+        <tbody>
+        <tr th:each="track : ${tracks}">
+            <td><img th:src="${track.getImage()}" width="50" height="50"></td>
+            <td th:text="${track.getName()}"></td>
+            <td th:text="${track.getPrettyArtists()}"></td>
+            <td th:text="${track.getAlbum()}"></td>
+            <td th:text="${track.getExplicitPretty()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

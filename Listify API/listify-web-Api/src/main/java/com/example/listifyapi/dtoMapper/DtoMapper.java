@@ -31,9 +31,10 @@ public class DtoMapper implements IDtoMapper{
     public ArtistDto mapArtist(Artist artist) {
         var dto = new ArtistDto();
         dto.setSpotifyId(artist.getSpotifyId());
-        dto.setGenres(Arrays.asList(artist.getGenres().split(",")));
+        dto.setGenres(artist.getGenres());
         dto.setImage(artist.getImage());
         dto.setName(artist.getName());
+        dto.setPopularity(artist.getPopularity());
         return dto;
     }
     @Override
@@ -44,6 +45,9 @@ public class DtoMapper implements IDtoMapper{
         dto.setExplicit(track.isExplicit());
         dto.setDurationMs(track.getDurationMs());
         dto.setName(track.getName());
+        dto.setImage(track.getAlbum().getImage());
+        dto.setArtists(track.getArtists().stream().map(Artist::getName).toList());
+        dto.setAlbum(track.getAlbum().getName());
         return dto;
     }
 }

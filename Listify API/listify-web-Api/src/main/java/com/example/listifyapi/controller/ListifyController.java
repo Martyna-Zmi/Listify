@@ -1,5 +1,6 @@
 package com.example.listifyapi.controller;
 
+import com.example.listifyapi.dto.ArtistDto;
 import com.example.listifyapi.service.ListifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,12 +37,21 @@ public class ListifyController {
         listifyService.deleteTrack(id);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
      }
+     @GetMapping("tracks/random")
+     public ResponseEntity getRandomTrack(){
+        return ResponseEntity.ok(listifyService.getRandomTrack());
+     }
     //Artists
-    //TODO save artist, update artist
+    //TODO update artist
     @GetMapping("artists/get")
     public ResponseEntity getAllArtists(){
         var results = listifyService.getAllArtists();
         return ResponseEntity.ok(results);
+    }
+    @GetMapping("artists/{id}")
+    public ResponseEntity artistById(@PathVariable("id")String id){
+        var result = listifyService.getArtistById(id);
+        return ResponseEntity.ok(result);
     }
     @GetMapping("genres/{genre}")
     public ResponseEntity getArtistsByGenre(@PathVariable("genre")String genre){
@@ -62,6 +72,15 @@ public class ListifyController {
     public ResponseEntity deleteArtist(@PathVariable("id")String id){
         listifyService.deleteArtist(id);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
+//    @PostMapping("artists/new")
+//    public ResponseEntity saveArtist(@RequestBody ArtistDto artistDto){
+//        listifyService.saveArtist(artistDto);
+//        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+//    }
+    @GetMapping("artists/random")
+    public ResponseEntity getRandomArtist(){
+        return ResponseEntity.ok(listifyService.getRandomArtist());
     }
     //Albums
     //TODO save album, update album, delete album

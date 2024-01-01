@@ -8,6 +8,7 @@ import java.util.List;
 public class ArtistDto {
     private String spotifyId;
     private String name;
-    private List<String> genres;
+    private String genres;
     private String image;
+    private int popularity;
 }

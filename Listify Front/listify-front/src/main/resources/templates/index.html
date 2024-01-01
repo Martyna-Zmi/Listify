@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listify</title>
+    <link th:href="@{/mainView.css}" rel="stylesheet" />
+</head>
+<body>
+<h2 class="main-header">Listify</h2>
+<h4>Songs against boredom</h4>
+<br>
+<h3>Random Song:</h3>
+<h4 th:text="${randomSong.getName()}"></h4>
+<p><a th:href="@{'http://localhost:8080/listify/tracks/'+${randomSong.getSpotifyId()}}">See more</a></p>
+<br>
+<h3>Random Artist:</h3>
+<h4 th:text="${randomArtist.getName()}"></h4>
+<p><a th:href="@{'http://localhost:8080/listify/artists/'+${randomArtist.getSpotifyId()}}">See more</a></p>
+<form action="#" th:action="@{'http://localhost:8080/listify/viewTracks'}" method="get">
+    <input type="submit" value="All tracks">
+</form>
+</body>
+</html>
