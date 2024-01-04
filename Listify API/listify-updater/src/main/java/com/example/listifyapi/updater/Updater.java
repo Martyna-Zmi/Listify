@@ -44,12 +44,6 @@ public class Updater {
                     .body(ArtistDtoSp.class);
             artists.add(mapper.mapArtist(fullArtistDto));
         }
-        //List<Artist> artistsDuplicates = artistDtos.stream().map(dto->mapper.mapArtist(dto)).toList();
-        //List<Artist> artists = ListIterate.distinct(artistsDuplicates, HashingStrategies.fromFunction(Artist::getSpotifyId));
-
-
-        //artists.get(0).setGenres(Arrays.toString(mainArtist.getGenres()));
-        //artists.get(0).setImage(mainArtist.getImage().get(0).getUrl());
 
         List<Album> albumsDuplicates = trackDtos.stream().map(dto->mapper.mapAlbum(dto.getAlbum())).toList();
         List<Album> albums = ListIterate.distinct(albumsDuplicates, HashingStrategies.fromFunction(Album::getSpotifyId));
@@ -59,7 +53,7 @@ public class Updater {
         tracks.forEach(track-> repoCatalog.getTrackRepository().save(track));
         artists.forEach(artist-> repoCatalog.getArtistRepository().save(artist));
 
-        for(int i=0; i<trackDtos.size(); i++){ // album -> tracks & track -> album
+        for(int i=0; i<trackDtos.size(); i++){ //track -> album
             String id = trackDtos.get(i).getAlbum().getSpotifyId();
             Album tempAlbum = albums.stream().filter(album -> id.equals(album.getSpotifyId())).findFirst().orElse(null);
             tracks.get(i).setAlbum(tempAlbum);
@@ -70,6 +64,8 @@ public class Updater {
             var tempTracks = new ArrayList<>(tempAlbum.getTracks());
             tempTracks.add(tracks.get(i));
             tempAlbum.setTracks(tempTracks);
+            tempAlbum.setTotalTracks(tempAlbum.getTotalTracks()+1);
+            repoCatalog.getAlbumRepository().save(tempAlbum);
         }
         for(int i=0; i<trackDtos.size(); i++){ //track -> artists, artist-> tracks
             final Track track = tracks.get(i);

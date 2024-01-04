@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Save Track</title>
+</head>
+<body>
+<h2>Add a new Track</h2>
+<form action="#" th:action="@{'http://localhost:8080/listify/save/track'}" th:object="${track}" method="post">
+    <fieldset>
+        <legend>Info</legend>
+        <label>Name:</label>
+        <input type="text" th:field="*{name}" id="name" required>
+        <br>
+        <label>Duration:</label>
+        <input type="number" required th:field="*{durationMs}">
+        <label><b>In MILLISECONDS</b></label>
+        <br>
+        <label>Is explicit?:</label>
+        <select th:field="*{explicit}" required>
+            <option value="true">true</option>
+            <option value="false">false</option>
+        </select>
+        <br>
+        <label>Image link</label>
+        <input type="text" th:field="*{image}" required>
+        <br>
+        <label>Popularity</label>
+        <input type="number" max="100" min="0" th:field="*{popularity}">
+        <label>[a number from 0 to 100]</label>
+        <br>
+        <label>Artist</label>
+        <select id="tempArtist" name="tempArtist" required>
+            <option th:each="option : ${artists}" th:value="${option.spotifyId}"  th:text="${option.name}"></option>
+        </select>
+        <br>
+        <label>Album</label>
+        <select name="album" id="album" required>
+            <option th:each="option : ${albums}" th:value="${option.spotifyId}"  th:text="${option.name}"></option>
+        </select>
+        <input type="hidden" th:field="*{spotifyId}">
+        <input type="submit" value="Save" id="add">
+    </fieldset>
+</form>
+</body>
+</html>

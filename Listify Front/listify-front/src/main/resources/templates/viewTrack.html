@@ -4,10 +4,19 @@
     <meta charset="UTF-8">
     <title>Song Details</title>
     <link th:href="@{/mainView.css}" rel="stylesheet" />
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            text-align:center;
+        }
+        th, td {
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
 <h2 th:text="${track.name}">Song</h2>
-<table class="table-main" border="1">
+<table class="table-main">
     <thead>
     <th></th>
     <th>Name</th>
@@ -15,17 +24,18 @@
     <th>Artists</th>
     <th>Length</th>
     <th>Is Explicit?</th>
-    <th>Spotify</th>
     </thead>
     <tbody>
-    <td><img th:src="${track.getImage()}" width="70" height="70"></td>
+    <td><img th:src="${track.getImage()}" width="170" height="170"></td>
     <td th:text="${track.getName()}"></td>
     <td th:text="${track.getAlbum()}"></td>
     <td th:text="${track.getPrettyArtists()}"></td>
     <td th:text="${track.getLength()}"></td>
     <td th:text="${track.getExplicitPretty()}"></td>
-    <td><a th:text="${track.getSpotifyUrl()}"></a></td>
     </tbody>
 </table>
+<p>Track's popularity is</p>
+<p th:text="${track.popularity}"></p>
+<p th:text="${track.popularityStats()}"></p>
 </body>
 </html>

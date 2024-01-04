@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Album details</title>
+  <style>
+    table, th, td {
+      border: 1px solid black;
+      text-align:center;
+    }
+    th, td {
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+<h2 th:text="${album.name}">Album</h2>
+<table class="table-main">
+  <thead>
+  <th></th>
+  <th>Name</th>
+  <th>Total songs</th>
+  <th>Release date</th>
+  <th>Type</th>
+  </thead>
+  <tbody>
+  <td><img th:src="${album.image}" width="170" height="170"></td>
+  <td th:text="${album.name}"></td>
+  <td th:text="${album.totalTracks}"></td>
+  <td th:text="${album.releaseDate}"></td>
+  <td th:text="${album.albumType}"></td>
+  </tbody>
+</table>
+<h2>Songs on album:</h2>
+<table class="table-main" border="1">
+  <link th:href="@{/mainView.css}" rel="stylesheet" />
+  <thead>
+  <th>---</th>
+  <th>Name</th>
+  <th>Artists</th>
+  <th>Album</th>
+  <th>Explicit?</th>
+  </thead>
+  <tbody>
+  <tr th:each="track : ${tracks}">
+    <td><img th:src="${track.getImage()}" width="50" height="50"></td>
+    <td th:text="${track.getName()}"></td>
+    <td th:text="${track.getPrettyArtists()}"></td>
+    <td th:text="${track.getAlbum()}"></td>
+    <td th:text="${track.getExplicitPretty()}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

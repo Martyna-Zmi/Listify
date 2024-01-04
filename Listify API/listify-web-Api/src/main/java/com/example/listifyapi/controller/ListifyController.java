@@ -1,6 +1,8 @@
 package com.example.listifyapi.controller;
 
+import com.example.listifyapi.dto.AlbumDto;
 import com.example.listifyapi.dto.ArtistDto;
+import com.example.listifyapi.dto.TrackDto;
 import com.example.listifyapi.service.ListifyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +18,12 @@ public class ListifyController {
         this.listifyService = listifyService;
     }
    //Tracks
-    //TODO save track, update track
+    //TODO update track
+   @PostMapping("save/track")
+   public ResponseEntity saveTrack(@RequestBody TrackDto trackDto){
+       listifyService.saveTrack(trackDto);
+       return ResponseEntity.ok(HttpStatus.ACCEPTED);
+   }
     @GetMapping("tracks/get")
     public ResponseEntity getAllTracks(){
         var results = listifyService.getAllTracks();
@@ -73,21 +80,31 @@ public class ListifyController {
         listifyService.deleteArtist(id);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
-//    @PostMapping("artists/new")
-//    public ResponseEntity saveArtist(@RequestBody ArtistDto artistDto){
-//        listifyService.saveArtist(artistDto);
-//        return ResponseEntity.ok(HttpStatus.ACCEPTED);
-//    }
+    @PostMapping("save/artist")
+    public ResponseEntity saveArtist(@RequestBody ArtistDto artistDto){
+        listifyService.saveArtist(artistDto);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
     @GetMapping("artists/random")
     public ResponseEntity getRandomArtist(){
         return ResponseEntity.ok(listifyService.getRandomArtist());
     }
     //Albums
-    //TODO save album, update album, delete album
+    //TODO update album, delete album
     @GetMapping("albums/{id}")
     public ResponseEntity getAlbumById(@PathVariable("id") String id){
         var result = listifyService.getAlbumById(id);
         return ResponseEntity.ok(result);
+    }
+    @GetMapping("albums/get")
+    public ResponseEntity getAllAlbums(){
+        var result = listifyService.getAlbums();
+        return ResponseEntity.ok(result);
+    }
+    @PostMapping("save/album")
+    public ResponseEntity saveAlbum(@RequestBody AlbumDto albumDto){
+        listifyService.saveAlbum(albumDto);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
     @DeleteMapping("albums/{id}/delete")
     public ResponseEntity deleteAlbum(@PathVariable("id")String id){

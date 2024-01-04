@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link th:href="@{/mainView.css}" rel="stylesheet" />
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            text-align:center;
+        }
+        th, td {
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
 <h2 th:text="${artist.name}">Song</h2>
@@ -14,10 +23,13 @@
     <th>Genres</th>
     </thead>
     <tbody>
-    <td><img th:src="${artist.getImage()}" width="50" height="50"></td>
-    <td th:text="${artist.getName()}"></td>
-    <td th:text="${artist.getGenres()}"></td>
+    <td><img th:src="${artist.image}" width="170" height="170"></td>
+    <td th:text=" ${artist.name} "></td>
+    <td th:text=" ${artist.genres} "></td>
     </tbody>
 </table>
+<p>This artist's popularity is:</p>
+<p th:text="${artist.popularity}"></p>
+<p th:text="${artist.popularityStats()}"></p>
 </body>
 </html>

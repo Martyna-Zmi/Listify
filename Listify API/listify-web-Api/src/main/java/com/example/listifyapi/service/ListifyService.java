@@ -6,6 +6,7 @@ import com.example.listifyapi.dto.TrackDto;
 import com.example.listifyapi.dtoMapper.IDtoMapper;
 import com.example.listifyapi.entities.Album;
 import com.example.listifyapi.entities.Artist;
+import com.example.listifyapi.entities.Track;
 import com.example.listifyapi.entityMapper.IEntityMapper;
 import com.example.listifyapi.exceptions.ResourceNotFoundException;
 import com.example.listifyapi.repositories.RepoCatalog;
@@ -53,6 +54,10 @@ public class ListifyService {
         var tracks = repoCatalog.getTrackRepository().findAll();
         var random = new Random();
         return dtoMapper.mapTrack(tracks.get(random.nextInt(tracks.size())));
+    }
+    public void saveTrack(TrackDto trackDto){
+        Track track = entityMapper.mapToTrack(trackDto);
+        repoCatalog.getTrackRepository().save(track);
     }
     public void deleteTrack(String id){
         var entity = repoCatalog.getTrackRepository().getTrackBySpotifyId(id);
@@ -111,6 +116,10 @@ public class ListifyService {
         }
         return dtoMapper.mapAlbum(entity.get());
     }
+    public List<AlbumDto> getAlbums(){
+        var entities = repoCatalog.getAlbumRepository().findAll();
+        return entities.stream().map(dtoMapper::mapAlbum).toList();
+    }
     public void deleteAlbum(String id){
         var entity = repoCatalog.getAlbumRepository().findBySpotifyId(id);
         if(entity.isEmpty()){
@@ -118,12 +127,20 @@ public class ListifyService {
         }
         repoCatalog.getAlbumRepository().delete(entity.get());
     }
-//    public void saveArtist(ArtistDto artistDto){
-//        Optional<Artist> artist = repoCatalog.getArtistRepository().getArtistBySpotifyId(artistDto.getSpotifyId());
-//        if(artist.isPresent()){
-//            //TODO throw exception - resource already exists
-//        }
-//        var entity = entityMapper.mapToArtist(artistDto);
-//        repoCatalog.getArtistRepository().save(entity);
-//    }
+    public void saveArtist(ArtistDto artistDto){
+        Optional<Artist> artist = repoCatalog.getArtistRepository().getArtistBySpotifyId(artistDto.getSpotifyId());
+        if(artist.isPresent()){
+            //TODO throw exception - resource already exists
+        }
+        var entity = entityMapper.mapToArtist(artistDto);
+        repoCatalog.getArtistRepository().save(entity);
+    }
+    public void saveAlbum(AlbumDto albumDto){
+        Optional<Album> album = repoCatalog.getAlbumRepository().findBySpotifyId(albumDto.getSpotifyId());
+        if(album.isPresent()){
+            //TODO throw exception - resource already exists
+        }
+        var entity = entityMapper.mapToAlbum(albumDto);
+        repoCatalog.getAlbumRepository().save(entity);
+    }
 }

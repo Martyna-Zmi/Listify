@@ -7,21 +7,22 @@
 </head>
 <body>
 <h2>Add a new Artist</h2>
-<form action="#" th:action="@{/saveArtist.html}" th:object="${artist}" method="post">
+<form action="#" th:action="@{'http://localhost:8080/listify/save/artist'}" th:object="${artist}" method="post">
     <fieldset>
         <legend>Info</legend>
-        <label>Id:</label>
-        <input type="text" th:field="*{spotifyId}" min="0" id="id">
-        <br>
         <label>Name:</label>
-        <input type="text" th:field="*{name}" id="name">
+        <input type="text" th:field="*{name}" id="name" required>
         <br>
         <label>Genres:</label>
-        <input type="text" th:field="*{genres}" min="0" id="genres">
+        <input type="text" th:field="*{genres}" id="genres" required>
         <br>
         <label>Image link:</label>
-        <input type="text" th:field="*{image}" min="0" id="image">
+        <input type="text" th:field="*{image}" id="image" required>
         <br>
+        <label>Popularity (allowed values from 0 to 100)</label>
+        <input type="number" th:field="*{popularity}">
+        <br>
+        <input type="hidden" th:field="*{spotifyId}">
         <input type="submit" value="Save" id="add">
     </fieldset>
 </form>

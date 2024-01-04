@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link th:href="@{/mainView.css}" rel="stylesheet" />
+  <style>
+    table, th, td {
+      border: 1px solid black;
+      text-align:center;
+    }
+    th, td {
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+<form action="#" th:action="@{'http://localhost:8080/listify/main'}" method="get">
+  <input type="submit" value="Back to main page">
+</form>
+<h2 class="main-header">♫ Albums ♫</h2>
+<table class="table-main" border="1">
+  <thead>
+  <th></th>
+  <th>Name</th>
+  <th>Total tracks</th>
+  <th>Type</th>
+  <th>Release Date</th>
+  <th></th>
+  </thead>
+  <tbody>
+  <tr th:each="album : ${albums}">
+    <td><img th:src="${album.image}" width="50" height="50"></td>
+    <td th:text="${album.name}"></td>
+    <td th:text="${album.totalTracks}"></td>
+    <td th:text="${album.albumType}"></td>
+    <td th:text="${album.releaseDate}"></td>
+    <td>
+      <form action="#" th:action="@{'http://localhost:8080/listify/albums/'+${album.spotifyId}}" method="get">
+        <input type="submit" value="Details">
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

@@ -6,12 +6,23 @@ import com.example.listifyapi.dto.TrackDto;
 import com.example.listifyapi.entities.Album;
 import com.example.listifyapi.entities.Artist;
 import com.example.listifyapi.entities.Track;
+import com.example.listifyapi.exceptions.ResourceNotFoundException;
+import com.example.listifyapi.repositories.IRepoCatalog;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @NoArgsConstructor
 public class EntityMapper implements IEntityMapper{
+    private IRepoCatalog repoCatalog;
+    @Autowired
+    public EntityMapper(IRepoCatalog repoCatalog){
+        this.repoCatalog = repoCatalog;
+    }
 
     @Override
     public Artist mapToArtist(ArtistDto dto) {
@@ -41,8 +52,22 @@ public class EntityMapper implements IEntityMapper{
         entity.setSpotifyId(dto.getSpotifyId());
         entity.setExplicit(dto.isExplicit());
         entity.setPopularity(dto.getPopularity());
-        entity.setSpotifyUrl(dto.getSpotifyUrl());
         entity.setDurationMs(dto.getDurationMs());
+        var album = repoCatalog.getAlbumRepository().findBySpotifyId(dto.getAlbum());
+        var artist = repoCatalog.getArtistRepository().getArtistBySpotifyId(dto.getArtists().get(0));
+        if(artist.isEmpty() || album.isEmpty()){
+            throw new ResourceNotFoundException();
+        }
+        else{
+            entity.setAlbum(album.get());
+            album.get().setTotalTracks(album.get().getTotalTracks()+1);
+            List<Artist> artists = new ArrayList<>();
+            artists.add(artist.get());
+            entity.setArtists(artists);
+            var artistsTracks = new ArrayList<>(artist.get().getTracks());
+            artistsTracks.add(entity);
+            artist.get().setTracks(artistsTracks);
+        }
         return entity;
     }
 }

@@ -20,7 +20,7 @@ public class Mapper implements IMapper {
         if(dto.getImage()!=null){
             artist.setImage(dto.getImage().get(0).getUrl());
         }
-        String genres = Arrays.toString(dto.getGenres()).replace(" ","-")
+        String genres = Arrays.toString(dto.getGenres())
                        .replace("[","")
                        .replace("]","");
         artist.setGenres(genres);
@@ -36,7 +36,7 @@ public class Mapper implements IMapper {
         album.setName(dto.getName());
         album.setImage(dto.getImage().get(0).getUrl());
         album.setAlbumType(dto.getAlbumType());
-        album.setTotalTracks(dto.getTotalTracks());
+        album.setTotalTracks(0);
         album.setReleaseDate(dto.getReleaseDate());
         return album;
     }

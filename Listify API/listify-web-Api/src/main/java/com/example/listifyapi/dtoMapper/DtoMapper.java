@@ -41,11 +41,12 @@ public class DtoMapper implements IDtoMapper{
     public TrackDto mapTrack(Track track) {
         var dto = new TrackDto();
         dto.setSpotifyId(track.getSpotifyId());
-        dto.setSpotifyUrl(track.getSpotifyUrl());
+        //dto.setSpotifyUrl(track.getSpotifyUrl());
         dto.setExplicit(track.isExplicit());
         dto.setDurationMs(track.getDurationMs());
         dto.setName(track.getName());
         dto.setImage(track.getAlbum().getImage());
+        dto.setPopularity(track.getPopularity());
         dto.setArtists(track.getArtists().stream().map(Artist::getName).toList());
         dto.setAlbum(track.getAlbum().getName());
         return dto;

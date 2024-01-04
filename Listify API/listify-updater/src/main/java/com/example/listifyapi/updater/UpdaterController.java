@@ -32,7 +32,7 @@ public class UpdaterController {
     public void updateWithTop(@PathVariable("artistId") String artistId){
         //TODO log about update
         var resultPage = restClient.get()
-                .uri(URL+"artists/"+artistId+"/top-tracks?market=PL")
+                .uri(URL+"artists/"+artistId+"/top-tracks?market=US")
                 .header("Authorization", "Bearer " + hourlyKey)
                 .retrieve()
                 .body(TopTracksDtoSp.class);
