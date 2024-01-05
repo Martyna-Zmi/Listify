@@ -20,7 +20,10 @@ public class ArtistDto {
             return "Somewhat recognizable";
         }
         else if(popularity<75){
-            return "A twinkling star";
+            return "Radio Star";
+        }
+        else if(popularity<80){
+            return "A famous star";
         }
         else{
             return "A superstar";

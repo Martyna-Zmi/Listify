@@ -18,7 +18,6 @@ public class ListifyController {
         this.listifyService = listifyService;
     }
    //Tracks
-    //TODO update track
    @PostMapping("save/track")
    public ResponseEntity saveTrack(@RequestBody TrackDto trackDto){
        listifyService.saveTrack(trackDto);
@@ -28,6 +27,11 @@ public class ListifyController {
     public ResponseEntity getAllTracks(){
         var results = listifyService.getAllTracks();
         return ResponseEntity.ok(results);
+    }
+    @PutMapping("update/track")
+    public ResponseEntity updateTrack(@RequestBody TrackDto trackDto){
+        listifyService.updateTrack(trackDto);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
     @GetMapping("tracks/{id}")
     public ResponseEntity getTrackById(@PathVariable("id") String id){
@@ -49,7 +53,6 @@ public class ListifyController {
         return ResponseEntity.ok(listifyService.getRandomTrack());
      }
     //Artists
-    //TODO update artist
     @GetMapping("artists/get")
     public ResponseEntity getAllArtists(){
         var results = listifyService.getAllArtists();
@@ -85,12 +88,16 @@ public class ListifyController {
         listifyService.saveArtist(artistDto);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
+    @PutMapping("update/artist")
+    public ResponseEntity updateArtist(@RequestBody ArtistDto artistDto){
+        listifyService.updateArtist(artistDto);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
     @GetMapping("artists/random")
     public ResponseEntity getRandomArtist(){
         return ResponseEntity.ok(listifyService.getRandomArtist());
     }
     //Albums
-    //TODO update album, delete album
     @GetMapping("albums/{id}")
     public ResponseEntity getAlbumById(@PathVariable("id") String id){
         var result = listifyService.getAlbumById(id);
@@ -109,6 +116,11 @@ public class ListifyController {
     @DeleteMapping("albums/{id}/delete")
     public ResponseEntity deleteAlbum(@PathVariable("id")String id){
         listifyService.deleteAlbum(id);
+        return ResponseEntity.ok(HttpStatus.ACCEPTED);
+    }
+    @PutMapping("update/album")
+    public ResponseEntity updateAlbum(@RequestBody AlbumDto albumDto){
+        listifyService.updateAlbum(albumDto);
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
 }

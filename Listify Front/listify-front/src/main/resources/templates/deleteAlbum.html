@@ -1,29 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Album details</title>
-  <style>
-    table, th, td {
-      border: 1px solid black;
-      text-align:center;
-    }
-    th, td {
-      padding: 20px;
-    }
-  </style>
+    <title>Delete album</title>
   <link th:href="@{/mainView.css}" rel="stylesheet" />
 </head>
 <body>
 <form action="#" th:action="@{'http://localhost:8080/listify/main'}" method="get">
   <input type="submit" value="Back to main page">
 </form>
-<h2>📀 Album details 📀</h2>
+<h2>❌ Delete Album ❌</h2>
+<h4>[also deletes all song on this album]</h4>
 <table class="table-main">
   <thead>
   <th></th>
   <th>Name</th>
-  <th>Total songs</th>
+  <th>Total tracks</th>
   <th>Release date</th>
   <th>Type</th>
   <td></td>
@@ -35,16 +27,13 @@
   <td th:text="${album.releaseDate}"></td>
   <td th:text="${album.albumType}"></td>
   <td>
-    <form action="#" th:action="@{'http://localhost:8080/listify/update/album/'+${album.spotifyId}}" method="get">
-    <input type="submit" value="Update">
-  </form>
-    <form action="#" th:action="@{'http://localhost:8080/listify/albums/'+${album.spotifyId}+'/delete'}" method="get">
-      <input type="submit" value="Delete">
+    <form action="#" th:action="@{'http://localhost:8080/listify/albums/'+${album.spotifyId}+'/delete'}" method="post">
+      <input type="submit" value="delete">
     </form>
   </td>
   </tbody>
 </table>
-<h2>♫ Tracks on album:♫ </h2>
+<h2>🎵 Tracks on album: 🎵</h2>
 <table class="table-main" border="1">
 
   <thead>
@@ -53,7 +42,6 @@
   <th>Artists</th>
   <th>Album</th>
   <th>Explicit?</th>
-  <th></th>
   </thead>
   <tbody>
   <tr th:each="track : ${tracks}">
@@ -62,13 +50,9 @@
     <td th:text="${track.getPrettyArtists()}"></td>
     <td th:text="${track.getAlbum()}"></td>
     <td th:text="${track.getExplicitPretty()}"></td>
-    <td>
-      <form action="#" th:action="@{'http://localhost:8080/listify/tracks/'+${track.spotifyId}}" method="get">
-        <input type="submit" value="view details">
-      </form>
-    </td>
   </tr>
   </tbody>
 </table>
+
 </body>
 </html>

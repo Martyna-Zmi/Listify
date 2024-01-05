@@ -66,6 +66,13 @@ public class FrontService {
                 .body(new ParameterizedTypeReference<>(){});
         return artists;
     }
+    public void updateArtist(ArtistDto artistDto){
+        ResponseEntity<Void> response = restClient.put().uri(URL+"update/artist")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(artistDto)
+                .retrieve()
+                .toBodilessEntity();
+    }
     public void saveArtist(ArtistDto artistDto){
         ResponseEntity<Void> response = restClient.post().uri(URL+"save/artist")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -80,7 +87,28 @@ public class FrontService {
                 .retrieve()
                 .toBodilessEntity();
     }
+    public void updateAlbum(AlbumDto albumDto){
+        ResponseEntity<Void> response = restClient.put().uri(URL+"update/album")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(albumDto)
+                .retrieve()
+                .toBodilessEntity();
+    }
+    public void updateTrack(TrackDto trackDto){
+        trackDto.explicitFromString();
+        ResponseEntity<Void> response = restClient.put().uri(URL+"update/track")
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(trackDto)
+                .retrieve()
+                .toBodilessEntity();
+    }
+    public void deleteTrack(String id){
+        restClient.delete().uri(URL+"/tracks/"+id+"/delete")
+                .retrieve()
+                .toBodilessEntity();
+    }
     public void saveTrack(TrackDto trackDto){
+        trackDto.explicitFromString();
         List<String> idArtist = new ArrayList<>();
                 idArtist.add(trackDto.getTempArtist());
         trackDto.setArtists(idArtist);
@@ -137,5 +165,13 @@ public class FrontService {
         }
         track.setSpotifyId(id);
         return track;
+    }
+    public void deleteArtist(String id){
+        restClient.delete().uri(URL+"artists/"+id+"/delete")
+                .retrieve().toBodilessEntity();
+    }
+    public void deleteAlbum(String id){
+        restClient.delete().uri(URL+"albums/"+id+"/delete")
+                .retrieve().toBodilessEntity();
     }
 }

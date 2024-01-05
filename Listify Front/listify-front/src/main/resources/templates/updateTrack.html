@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Track</title>
+  <link th:href="@{/mainView.css}" rel="stylesheet" />
+</head>
+<body>
+<form action="#" th:action="@{'http://localhost:8080/listify/main'}" method="get">
+  <input type="submit" value="Back to main page">
+</form>
+<h2>♫ Update Track ♫</h2>
+<form action="#" th:action="@{'http://localhost:8080/listify/update/track/'+${track.spotifyId}}" th:object="${track}" method="post">
+  <fieldset>
+    <legend>Info</legend>
+    <label>Name:</label>
+    <input type="text" th:field="*{name}" id="name" required>
+    <br>
+    <label>Duration:</label>
+    <input type="number" required th:field="*{durationMs}">
+    <label><b>In MILLISECONDS</b></label>
+    <br>
+    <label>Is explicit?:</label>
+    <select id="explicit" name="explicit" required>
+      <option value="true">true</option>
+      <option value="false">false</option>
+    </select>
+    <br>
+    <label>Image link</label>
+    <input type="text" th:field="*{image}" required>
+    <br>
+    <label>Popularity</label>
+    <input type="number" max="100" min="0" th:field="*{popularity}">
+    <label>[a number from 0 to 100]</label>
+    <input type="hidden" th:field="*{spotifyId}">
+    <input type="submit" value="Update" id="add">
+  </fieldset>
+</form>
+</body>
+</html>

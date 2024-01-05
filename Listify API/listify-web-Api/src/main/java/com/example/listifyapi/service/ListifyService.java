@@ -59,13 +59,6 @@ public class ListifyService {
         Track track = entityMapper.mapToTrack(trackDto);
         repoCatalog.getTrackRepository().save(track);
     }
-    public void deleteTrack(String id){
-        var entity = repoCatalog.getTrackRepository().getTrackBySpotifyId(id);
-        if(entity.isEmpty()){
-            throw new ResourceNotFoundException();
-        }
-        repoCatalog.getTrackRepository().delete(entity.get());
-    }
     public ArtistDto getArtistById(String id){
         var entity = repoCatalog.getArtistRepository().getArtistBySpotifyId(id);
         if(entity.isEmpty()){
@@ -102,12 +95,48 @@ public class ListifyService {
         var entities = repoCatalog.getArtistRepository().searchAllByPopularityGreaterThanEqual(70);
         return entities.stream().map(dtoMapper::mapArtist).toList();
     }
-    public void deleteArtist(String id){
-        var entity = repoCatalog.getArtistRepository().getArtistBySpotifyId(id);
+    public void updateTrack(TrackDto trackDto){
+        var entity = repoCatalog.getTrackRepository().getTrackBySpotifyId(trackDto.getSpotifyId());
         if(entity.isEmpty()){
             throw new ResourceNotFoundException();
         }
-        repoCatalog.getArtistRepository().delete(entity.get());
+        else{
+            var track = entity.get();
+            track.setDurationMs(trackDto.getDurationMs());
+            track.setExplicit(trackDto.isExplicit());
+            track.setPopularity(trackDto.getPopularity());
+            track.setName(trackDto.getName());
+            repoCatalog.getTrackRepository().save(track);
+        }
+    }
+    public void updateArtist(ArtistDto artistDto){
+        var dbEntity = repoCatalog.getArtistRepository().getArtistBySpotifyId(artistDto.getSpotifyId());
+        if(dbEntity.isEmpty()){
+            throw new ResourceNotFoundException();
+        }
+        else{
+           var entity = dbEntity.get();
+           entity.setName(artistDto.getName());
+           entity.setPopularity(artistDto.getPopularity());
+           entity.setGenres(artistDto.getGenres());
+           entity.setImage(artistDto.getImage());
+            repoCatalog.getArtistRepository().save(entity);
+        }
+    }
+    public void updateAlbum(AlbumDto albumDto){
+        var dbEntity = repoCatalog.getAlbumRepository().findBySpotifyId(albumDto.getSpotifyId());
+        if(dbEntity.isEmpty()){
+            throw new ResourceNotFoundException();
+        }
+        else{
+            var entity = dbEntity.get();
+            entity.setTotalTracks(albumDto.getTotalTracks());
+            entity.setReleaseDate(albumDto.getReleaseDate());
+            entity.setAlbumType(albumDto.getAlbumType());
+            entity.setName(albumDto.getName());
+            entity.setImage(albumDto.getImage());
+            repoCatalog.getAlbumRepository().save(entity);
+        }
     }
     public AlbumDto getAlbumById(String id){
         var entity = repoCatalog.getAlbumRepository().findBySpotifyId(id);
@@ -120,13 +149,7 @@ public class ListifyService {
         var entities = repoCatalog.getAlbumRepository().findAll();
         return entities.stream().map(dtoMapper::mapAlbum).toList();
     }
-    public void deleteAlbum(String id){
-        var entity = repoCatalog.getAlbumRepository().findBySpotifyId(id);
-        if(entity.isEmpty()){
-            throw new ResourceNotFoundException();
-        }
-        repoCatalog.getAlbumRepository().delete(entity.get());
-    }
+
     public void saveArtist(ArtistDto artistDto){
         Optional<Artist> artist = repoCatalog.getArtistRepository().getArtistBySpotifyId(artistDto.getSpotifyId());
         if(artist.isPresent()){
@@ -142,5 +165,56 @@ public class ListifyService {
         }
         var entity = entityMapper.mapToAlbum(albumDto);
         repoCatalog.getAlbumRepository().save(entity);
+    }
+
+    public void deleteArtist(String id){
+        var artist = repoCatalog.getArtistRepository().getArtistBySpotifyId(id);
+        if(artist.isEmpty()){
+            throw new ResourceNotFoundException();
+        }
+        else{
+            var entity = artist.get();
+            entity.setTracks(new ArrayList<>());
+            repoCatalog.getArtistRepository().save(entity);
+            entity.getTracks().forEach(track -> deleteTrack(track.getSpotifyId()));
+            repoCatalog.getArtistRepository().delete(entity);
+        }
+    }
+    public void deleteAlbum(String id){
+        var entity = repoCatalog.getAlbumRepository().findBySpotifyId(id);
+        if(entity.isEmpty()){
+            throw new ResourceNotFoundException();
+        }
+        else{
+            var album = entity.get();
+            var tracks = album.getTracks();
+            album.setTracks(new ArrayList<>());
+            tracks.forEach(track -> {
+                if(track.getAlbum().getSpotifyId().equals(id)){
+                    track.setAlbum(null);
+                    deleteTrack(track.getSpotifyId());
+                }
+            });
+            repoCatalog.getAlbumRepository().delete(album);
+        }
+    }
+    public void deleteTrack(String id){
+        var track = repoCatalog.getTrackRepository().getTrackBySpotifyId(id);
+        if(track.isEmpty()){
+            throw new ResourceNotFoundException();
+        }
+        else{
+            var entity = track.get();
+            entity.getAlbum().setTotalTracks(entity.getAlbum().getTotalTracks()-1);
+            var artists = entity.getArtists();
+            artists.forEach(artist ->{
+                var tempTracks = new ArrayList<>(artist.getTracks());
+                tempTracks.remove(entity);
+                artist.setTracks(tempTracks);
+            });
+            entity.setArtists(new ArrayList<>());
+            repoCatalog.getTrackRepository().save(entity);
+            repoCatalog.getTrackRepository().delete(entity);
+        }
     }
 }

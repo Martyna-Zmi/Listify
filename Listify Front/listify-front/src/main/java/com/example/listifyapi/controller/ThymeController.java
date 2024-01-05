@@ -23,7 +23,7 @@ public class ThymeController {
         model.addAttribute("randomSong", frontService.randomTrack());
         return "index";
     }
-    //Tracks TODO update, delete
+    //Tracks
     @GetMapping("tracks/{id}")
     public String trackById(@PathVariable("id")String id, Model model){
         model.addAttribute("track", frontService.trackById(id));
@@ -46,7 +46,27 @@ public class ThymeController {
         model.addAttribute("tracks", frontService.findAllTracks());
         return "viewTracks";
     }
-    //Albums TODO update, delete, show all
+    @GetMapping("update/track/{id}")
+    public String updateTrackInfo(Model model, @PathVariable String id){
+        model.addAttribute("track", frontService.trackById(id));
+        return "updateTrack";
+    }
+    @RequestMapping(value = "update/track/{id}", method = RequestMethod.POST)
+    public String updateTrack(Model model, @ModelAttribute TrackDto track, @PathVariable String id){
+        frontService.updateTrack(track);
+        return ("redirect:/listify/tracks/"+id);
+    }
+    @GetMapping("tracks/{id}/delete")
+    public String deleteTrackInfo(Model model, @PathVariable String id){
+        model.addAttribute("track", frontService.trackById(id));
+        return "deleteTrack";
+    }
+    @RequestMapping(value = "tracks/{id}/delete", method = RequestMethod.POST)
+    public String deleteTrack(Model model, @PathVariable String id){
+        frontService.deleteTrack(id);
+        return "redirect:/listify/main";
+    }
+    //Albums
     @GetMapping("albums/{id}")
     public String albumById(@PathVariable("id")String id, Model model){
         model.addAttribute("album", frontService.getAlbumById(id));
@@ -58,7 +78,6 @@ public class ThymeController {
             model.addAttribute("albums", frontService.getAllAlbums());
             return "viewAlbums";
         }
-
     @GetMapping(value = "save/album")
     public String addAlbumInfo(Model model){
         model.addAttribute("album", frontService.emptyAlbum());
@@ -69,11 +88,38 @@ public class ThymeController {
         frontService.saveAlbum(album);
         return ("redirect:/listify/albums/"+album.getSpotifyId());
     }
-    //Artists TODO update, delete, show all
+    @GetMapping(value = "update/album/{id}")
+    public String updateAlbumInfo(Model model,@PathVariable("id")String id){
+        model.addAttribute("album", frontService.getAlbumById(id));
+        return "updateAlbum";
+    }
+    @RequestMapping (value = "update/album/{id}", method = RequestMethod.POST)
+    public String updateAlbum(@ModelAttribute AlbumDto album, Model model){
+        frontService.updateAlbum(album);
+        return ("redirect:/listify/albums/"+album.getSpotifyId());
+    }
+    @GetMapping(value = "albums/{id}/delete")
+    public String deleteAlbumInfo(Model model,@PathVariable("id")String id){
+        var album = frontService.getAlbumById(id);
+        model.addAttribute("album", album);
+        model.addAttribute("tracks", frontService.albumsTracks(album));
+        return "deleteAlbum";
+    }
+    @RequestMapping (value = "albums/{id}/delete", method = RequestMethod.POST)
+    public String deleteAlbum(Model model, @PathVariable String id){
+        frontService.deleteAlbum(id);
+        return "redirect:/listify/main";
+    }
+    //Artists
     @GetMapping("artists/{id}")
     public String artistById(@PathVariable("id")String id, Model model){
         model.addAttribute("artist", frontService.artistById(id));
         return "viewArtist";
+    }
+    @GetMapping("viewArtists")
+    public String viewArtists(Model model){
+        model.addAttribute("artists", frontService.getAllArtists());
+        return "viewArtists";
     }
     @GetMapping(value = "save/artist")
     public String addArtistInfo(Model model){
@@ -84,5 +130,25 @@ public class ThymeController {
     public String addArtist(@ModelAttribute ArtistDto artist, Model model){
         frontService.saveArtist(artist);
         return ("redirect:/listify/artists/"+artist.getSpotifyId());
+    }
+    @GetMapping("update/artist/{id}")
+    public String updateArtistInfo(Model model, @PathVariable("id")String id){
+        model.addAttribute("artist", frontService.artistById(id));
+        return "updateArtist";
+    }
+    @RequestMapping (value = "update/artist/{id}", method = RequestMethod.POST)
+    public String updateArtist(@ModelAttribute ArtistDto artist, Model model){
+        frontService.updateArtist(artist);
+        return ("redirect:/listify/artists/"+artist.getSpotifyId());
+    }
+    @GetMapping("artists/{id}/delete")
+    public String deleteArtistInfo(Model model, @PathVariable("id")String id){
+        model.addAttribute("artist", frontService.artistById(id));
+        return "deleteArtist";
+    }
+    @RequestMapping (value = "artists/{id}/delete", method = RequestMethod.POST)
+    public String deleteArtist(@ModelAttribute ArtistDto artist, Model model, @PathVariable String id){
+        frontService.deleteArtist(id);
+        return "redirect:/listify/main";
     }
 }

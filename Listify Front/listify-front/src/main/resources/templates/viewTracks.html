@@ -10,7 +10,8 @@
     <form action="#" th:action="@{'http://localhost:8080/listify/main'}" method="get">
         <input type="submit" value="Back to main page">
     </form>
-    <h2 class="main-header">♫ All available songs ♫</h2>
+    <p>★🎸🎧⋆｡°⋆</p>
+    <h2 class="main-header">♫ All available tracks ♫</h2>
     <table class="table-main" border="1">
         <thead>
         <th>---</th>
@@ -18,6 +19,7 @@
         <th>Artists</th>
         <th>Album</th>
         <th>Explicit?</th>
+        <th></th>
         </thead>
         <tbody>
         <tr th:each="track : ${tracks}">
@@ -26,6 +28,11 @@
             <td th:text="${track.getPrettyArtists()}"></td>
             <td th:text="${track.getAlbum()}"></td>
             <td th:text="${track.getExplicitPretty()}"></td>
+            <td>
+                <form action="#" th:action="@{'http://localhost:8080/listify/tracks/'+${track.spotifyId}}" method="get">
+                    <input type="submit" value="Details">
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>

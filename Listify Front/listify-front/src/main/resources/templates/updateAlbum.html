@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Save album</title>
+    <title>Update Album</title>
   <link th:href="@{/mainView.css}" rel="stylesheet" />
 </head>
 <body>
 <form action="#" th:action="@{'http://localhost:8080/listify/main'}" method="get">
   <input type="submit" value="Back to main page">
 </form>
-<h2>Add a new Album</h2>
-<form action="#" th:action="@{'http://localhost:8080/listify/save/album'}" th:object="${album}" method="post">
+<h2>♫ Edit Album info♫ </h2>
+<form action="#" th:action="@{'http://localhost:8080/listify/update/album/'+${album.spotifyId}}" th:object="${album}" method="post">
   <fieldset>
     <legend>Info</legend>
     <label>Name:</label>
     <input type="text" th:field="*{name}" id="name" required>
     <br>
-    <label>Album type:</label>
+    <label>Type:</label>
     <select th:field="*{albumType}" required>
       <option value="album">Album</option>
       <option value="single">Single</option>
@@ -29,8 +29,8 @@
     <input type="date" th:field="*{releaseDate}" required>
     <br>
     <input type="hidden" th:field="*{spotifyId}">
-    <input type="hidden" th:field="*{totalTracks}" value="0">
-    <input type="submit" value="Save" id="add">
+    <input type="hidden" th:field="*{totalTracks}">
+    <input type="submit" value="Update" id="add">
   </fieldset>
 </form>
 </body>

@@ -9,15 +9,18 @@ import java.util.List;
 public class TrackDto {
     private String spotifyId;
     private String name;
-    int durationMs;
-    boolean isExplicit;
-    String explicit;
+    private int durationMs;
+    private boolean isExplicit;
+    private String explicit;
     private String image;
     private List<String> artists;
     private String tempArtist;
     private String album;
     private int popularity;
     public String getPrettyArtists(){
+        if(artists==null){
+            return "empty";
+        }
         return Arrays.toString(artists.toArray()).replace("[","").replace("]","");
     }
     public String getExplicitPretty(){
@@ -53,6 +56,9 @@ public class TrackDto {
         }
     }
     public void explicitFromString(){
-        this.isExplicit = !this.explicit.equals("false");
+        isExplicit = !explicit.equals("false");
+    }
+    public boolean getIsExplicit(){
+        return this.isExplicit;
     }
 }

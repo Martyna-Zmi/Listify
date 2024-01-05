@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete track</title>
+  <link th:href="@{/mainView.css}" rel="stylesheet" />
+  <style>
+    table, th, td {
+      border: 1px solid black;
+      text-align:center;
+    }
+    th, td {
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+<form action="#" th:action="@{'http://localhost:8080/listify/main'}" method="get">
+  <input type="submit" value="Back to main page">
+</form>
+<h2>❌ Delete Track ❌</h2>
+<table class="table-main">
+  <thead>
+  <th></th>
+  <th>Name</th>
+  <th>Album</th>
+  <th>Artists</th>
+  <th>Length</th>
+  <th>Is Explicit?</th>
+  <th></th>
+  </thead>
+  <tbody>
+  <td><img th:src="${track.getImage()}" width="170" height="170"></td>
+  <td th:text="${track.getName()}"></td>
+  <td th:text="${track.getAlbum()}"></td>
+  <td th:text="${track.getPrettyArtists()}"></td>
+  <td th:text="${track.getLength()}"></td>
+  <td th:text="${track.getExplicitPretty()}"></td>
+  <td>
+    <form action="#" th:action="@{'http://localhost:8080/listify/tracks/'+${track.spotifyId}+'/delete'}" method="post">
+      <input type="submit" value="Delete">
+    </form>
+  </td>
+  </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete artist</title>
+  <link th:href="@{/mainView.css}" rel="stylesheet" />
+  <style>
+    table, th, td {
+      border: 1px solid black;
+      text-align:center;
+    }
+    th, td {
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+<form action="#" th:action="@{'http://localhost:8080/listify/main'}" method="get">
+  <input type="submit" value="Back to main page">
+</form>
+<h2>Delete artist ❌</h2>
+<h4>[also deletes all their albums and all their songs]</h4>
+<h2 th:text="${artist.name}"></h2>
+<table class="table-main" border="1">
+  <thead>
+  <th></th>
+  <th>Name</th>
+  <th>Genres</th>
+  <th></th>
+  </thead>
+  <tbody>
+  <td><img th:src="${artist.image}" width="170" height="170"></td>
+  <td th:text=" ${artist.name} "></td>
+  <td th:text=" ${artist.genres} "></td>
+  <td><form action="#" th:action="@{'http://localhost:8080/listify/artists/'+${artist.spotifyId}+'/delete'}" method="post">
+    <input type="submit" value="Delete">
+  </form></td>
+  </tbody>
+</table>
+</body>
+</html>

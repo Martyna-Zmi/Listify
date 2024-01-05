@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Save Track</title>
+    <link th:href="@{/mainView.css}" rel="stylesheet" />
 </head>
 <body>
-<h2>Add a new Track</h2>
+<form action="#" th:action="@{'http://localhost:8080/listify/main'}" method="get">
+    <input type="submit" value="Back to main page">
+</form>
+<h2>♫ Add a new Track ♫</h2>
 <form action="#" th:action="@{'http://localhost:8080/listify/save/track'}" th:object="${track}" method="post">
     <fieldset>
         <legend>Info</legend>

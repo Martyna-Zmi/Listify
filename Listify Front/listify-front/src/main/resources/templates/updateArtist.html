@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Save a new Artist</title>
+    <title>Update artist</title>
     <link th:href="@{/mainView.css}" rel="stylesheet" />
 </head>
 <body>
 <form action="#" th:action="@{'http://localhost:8080/listify/main'}" method="get">
     <input type="submit" value="Back to main page">
 </form>
-<h2>Add a new Artist</h2>
-<form action="#" th:action="@{'http://localhost:8080/listify/save/artist'}" th:object="${artist}" method="post">
+<h2>♫ Edit Artist info ♫</h2>
+<form action="#" th:action="@{'http://localhost:8080/listify/update/artist/'+${artist.spotifyId}}" th:object="${artist}" method="post">
     <fieldset>
         <legend>Info</legend>
         <label>Name:</label>
@@ -26,7 +26,7 @@
         <input type="number" th:field="*{popularity}">
         <br>
         <input type="hidden" th:field="*{spotifyId}">
-        <input type="submit" value="Save" id="add">
+        <input type="submit" value="Update" id="add">
     </fieldset>
 </form>
 </body>

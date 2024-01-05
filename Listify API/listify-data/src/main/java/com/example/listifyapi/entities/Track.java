@@ -11,7 +11,6 @@ public class Track {
     private String name;
     int durationMs;
     boolean isExplicit;
-    private String spotifyUrl;
     private int popularity;
     @ManyToOne
     @JoinColumn(name = "album")
@@ -28,9 +27,6 @@ public class Track {
     public String getSpotifyId() {
         return spotifyId;
     }
-    public String getSpotifyUrl() {
-        return spotifyUrl;
-    }
     public void setName(String name) {
         this.name = name;
     }
@@ -42,9 +38,6 @@ public class Track {
     }
     public void setSpotifyId(String spotifyId) {
         this.spotifyId = spotifyId;
-    }
-    public void setSpotifyUrl(String spotifyUrl) {
-        this.spotifyUrl = spotifyUrl;
     }
     public List<Artist> getArtists() {
         return artists;

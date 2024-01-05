@@ -41,7 +41,6 @@ public class DtoMapper implements IDtoMapper{
     public TrackDto mapTrack(Track track) {
         var dto = new TrackDto();
         dto.setSpotifyId(track.getSpotifyId());
-        //dto.setSpotifyUrl(track.getSpotifyUrl());
         dto.setExplicit(track.isExplicit());
         dto.setDurationMs(track.getDurationMs());
         dto.setName(track.getName());
