@@ -11,11 +11,12 @@ import com.example.listifyapi.entityMapper.IEntityMapper;
 import com.example.listifyapi.exceptions.ResourceAlreadyExistsException;
 import com.example.listifyapi.exceptions.ResourceNotFoundException;
 import com.example.listifyapi.repositories.RepoCatalog;
+
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.LogManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import java.util.Random;
 @Service
 @Component
 public class ListifyService {
-    private static final Logger logger = LogManager.getLogger(ListifyService.class);
+    private static final Logger logger = LoggerFactory.getLogger(ListifyService.class);
     private final RepoCatalog repoCatalog;
     private final IDtoMapper dtoMapper;
     private final IEntityMapper entityMapper;
