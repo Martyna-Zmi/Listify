@@ -24,6 +24,7 @@ public class FrontService {
                 .body(new ParameterizedTypeReference<>() {});
         return tracks;
     }
+
     public ArtistDto randomArtist(){
         ArtistDto random = restClient.get().uri(URL+"artists/random")
                 .retrieve()
@@ -95,7 +96,6 @@ public class FrontService {
                 .toBodilessEntity();
     }
     public void updateTrack(TrackDto trackDto){
-        trackDto.explicitFromString();
         ResponseEntity<Void> response = restClient.put().uri(URL+"update/track")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(trackDto)
@@ -108,7 +108,6 @@ public class FrontService {
                 .toBodilessEntity();
     }
     public void saveTrack(TrackDto trackDto){
-        trackDto.explicitFromString();
         List<String> idArtist = new ArrayList<>();
                 idArtist.add(trackDto.getTempArtist());
         trackDto.setArtists(idArtist);

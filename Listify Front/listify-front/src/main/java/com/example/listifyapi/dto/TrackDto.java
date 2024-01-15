@@ -11,7 +11,6 @@ public class TrackDto {
     private String name;
     private int durationMs;
     private boolean isExplicit;
-    private String explicit;
     private String image;
     private List<String> artists;
     private String tempArtist;
@@ -31,10 +30,10 @@ public class TrackDto {
     }
     public String getLength(){
         int seconds = (int) (durationMs / 1000) % 60 ;
-        int minutes = (int) ((durationMs / (1000*60)) % 60);
+        int minutes = (int) ((durationMs / (1000)) / 60);
         String secondsString = String.valueOf(seconds);
         if(secondsString.length()==1){
-            secondsString+="0";
+            secondsString="0"+secondsString;
         }
         return (minutes+":"+secondsString);
     }
@@ -54,9 +53,6 @@ public class TrackDto {
         else{
             return "An absolute banger";
         }
-    }
-    public void explicitFromString(){
-        isExplicit = !explicit.equals("false");
     }
     public boolean getIsExplicit(){
         return this.isExplicit;

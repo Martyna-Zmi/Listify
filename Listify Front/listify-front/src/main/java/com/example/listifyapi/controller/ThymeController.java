@@ -69,8 +69,9 @@ public class ThymeController {
     //Albums
     @GetMapping("albums/{id}")
     public String albumById(@PathVariable("id")String id, Model model){
-        model.addAttribute("album", frontService.getAlbumById(id));
-        model.addAttribute("tracks", frontService.albumsTracks(frontService.getAlbumById(id)));
+        var album = frontService.getAlbumById(id);
+        model.addAttribute("album", album);
+        model.addAttribute("tracks", frontService.albumsTracks(album));
         return "viewAlbum";
     }
     @GetMapping("viewAlbums")
@@ -94,9 +95,9 @@ public class ThymeController {
         return "updateAlbum";
     }
     @RequestMapping (value = "update/album/{id}", method = RequestMethod.POST)
-    public String updateAlbum(@ModelAttribute AlbumDto album, Model model){
+    public String updateAlbum(@ModelAttribute AlbumDto album, Model model, @PathVariable String id){
         frontService.updateAlbum(album);
-        return ("redirect:/listify/albums/"+album.getSpotifyId());
+        return ("redirect:/listify/albums/"+id);
     }
     @GetMapping(value = "albums/{id}/delete")
     public String deleteAlbumInfo(Model model,@PathVariable("id")String id){

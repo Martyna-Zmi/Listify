@@ -8,11 +8,14 @@ import com.example.listifyapi.entities.Album;
 import com.example.listifyapi.entities.Artist;
 import com.example.listifyapi.entities.Track;
 import com.example.listifyapi.entityMapper.IEntityMapper;
+import com.example.listifyapi.exceptions.ResourceAlreadyExistsException;
 import com.example.listifyapi.exceptions.ResourceNotFoundException;
 import com.example.listifyapi.repositories.RepoCatalog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +25,7 @@ import java.util.Random;
 @Service
 @Component
 public class ListifyService {
+    private static final Logger logger = LogManager.getLogger(ListifyService.class);
     private final RepoCatalog repoCatalog;
     private final IDtoMapper dtoMapper;
     private final IEntityMapper entityMapper;
@@ -38,6 +42,7 @@ public class ListifyService {
     public TrackDto getTrackById(String id){
         var entity = repoCatalog.getTrackRepository().getTrackBySpotifyId(id);
         if(entity.isEmpty()){
+            logger.warn("Couldn't find the resource, Action: get track");
             throw new ResourceNotFoundException();
         }
         return dtoMapper.mapTrack(entity.get());
@@ -56,12 +61,19 @@ public class ListifyService {
         return dtoMapper.mapTrack(tracks.get(random.nextInt(tracks.size())));
     }
     public void saveTrack(TrackDto trackDto){
+        var trackInDb = repoCatalog.getTrackRepository().getTrackBySpotifyId(trackDto.getSpotifyId());
+        if(trackInDb.isPresent()){
+            logger.warn("Resource already exists, Action: save new track with id "+trackDto.getSpotifyId());
+            throw new ResourceAlreadyExistsException();
+        }
         Track track = entityMapper.mapToTrack(trackDto);
         repoCatalog.getTrackRepository().save(track);
+        logger.info("Track with id: '"+track.getSpotifyId()+"' saved successfully");
     }
     public ArtistDto getArtistById(String id){
         var entity = repoCatalog.getArtistRepository().getArtistBySpotifyId(id);
         if(entity.isEmpty()){
+            logger.warn("Couldn't find the resource, Action: get artist");
             throw new ResourceNotFoundException();
         }
         return dtoMapper.mapArtist(entity.get());
@@ -87,6 +99,7 @@ public class ListifyService {
             });
         }
         else{
+            logger.warn("Couldn't find the resource, Action: get artist's albums");
             throw new ResourceNotFoundException();
         }
         return albums.stream().map(dtoMapper::mapAlbum).toList();
@@ -98,6 +111,7 @@ public class ListifyService {
     public void updateTrack(TrackDto trackDto){
         var entity = repoCatalog.getTrackRepository().getTrackBySpotifyId(trackDto.getSpotifyId());
         if(entity.isEmpty()){
+            logger.warn("Couldn't find the resource, Action: update track");
             throw new ResourceNotFoundException();
         }
         else{
@@ -107,11 +121,13 @@ public class ListifyService {
             track.setPopularity(trackDto.getPopularity());
             track.setName(trackDto.getName());
             repoCatalog.getTrackRepository().save(track);
+            logger.info("Track with id: '"+ trackDto.getSpotifyId()+"' updated successfully");
         }
     }
     public void updateArtist(ArtistDto artistDto){
         var dbEntity = repoCatalog.getArtistRepository().getArtistBySpotifyId(artistDto.getSpotifyId());
         if(dbEntity.isEmpty()){
+            logger.warn("Couldn't find the resource, Action: update artist");
             throw new ResourceNotFoundException();
         }
         else{
@@ -121,11 +137,13 @@ public class ListifyService {
            entity.setGenres(artistDto.getGenres());
            entity.setImage(artistDto.getImage());
             repoCatalog.getArtistRepository().save(entity);
+            logger.info("Artist with id: '"+ artistDto.getSpotifyId()+"' updated successfully");
         }
     }
     public void updateAlbum(AlbumDto albumDto){
         var dbEntity = repoCatalog.getAlbumRepository().findBySpotifyId(albumDto.getSpotifyId());
         if(dbEntity.isEmpty()){
+            logger.warn("Couldn't find the resource, Action: update album");
             throw new ResourceNotFoundException();
         }
         else{
@@ -136,11 +154,13 @@ public class ListifyService {
             entity.setName(albumDto.getName());
             entity.setImage(albumDto.getImage());
             repoCatalog.getAlbumRepository().save(entity);
+            logger.info("Album with id: '"+ albumDto.getSpotifyId()+"' updated successfully");
         }
     }
     public AlbumDto getAlbumById(String id){
         var entity = repoCatalog.getAlbumRepository().findBySpotifyId(id);
         if(entity.isEmpty()){
+            logger.warn("Couldn't find the resource, Action get album");
             throw new ResourceNotFoundException();
         }
         return dtoMapper.mapAlbum(entity.get());
@@ -153,23 +173,28 @@ public class ListifyService {
     public void saveArtist(ArtistDto artistDto){
         Optional<Artist> artist = repoCatalog.getArtistRepository().getArtistBySpotifyId(artistDto.getSpotifyId());
         if(artist.isPresent()){
-            //TODO throw exception - resource already exists
+            logger.warn("Resource already exists, Action: save new artist with id "+artistDto.getSpotifyId());
+            throw new ResourceAlreadyExistsException();
         }
         var entity = entityMapper.mapToArtist(artistDto);
         repoCatalog.getArtistRepository().save(entity);
+        logger.info("Artist with id: '"+artistDto.getSpotifyId()+"' saved successfully");
     }
     public void saveAlbum(AlbumDto albumDto){
         Optional<Album> album = repoCatalog.getAlbumRepository().findBySpotifyId(albumDto.getSpotifyId());
         if(album.isPresent()){
-            //TODO throw exception - resource already exists
+            logger.warn("Resource already exists, Action: save new album with id "+albumDto.getSpotifyId());
+            throw new ResourceAlreadyExistsException();
         }
         var entity = entityMapper.mapToAlbum(albumDto);
         repoCatalog.getAlbumRepository().save(entity);
+        logger.info("Album with id: '"+albumDto.getSpotifyId()+"' saved successfully");
     }
 
     public void deleteArtist(String id){
         var artist = repoCatalog.getArtistRepository().getArtistBySpotifyId(id);
         if(artist.isEmpty()){
+            logger.warn("Couldn't find the resource, Action: delete artist");
             throw new ResourceNotFoundException();
         }
         else{
@@ -178,11 +203,13 @@ public class ListifyService {
             repoCatalog.getArtistRepository().save(entity);
             entity.getTracks().forEach(track -> deleteTrack(track.getSpotifyId()));
             repoCatalog.getArtistRepository().delete(entity);
+            logger.info("Artist with id: '"+id+"' deleted successfully");
         }
     }
     public void deleteAlbum(String id){
         var entity = repoCatalog.getAlbumRepository().findBySpotifyId(id);
         if(entity.isEmpty()){
+            logger.warn("Couldn't find the resource, Action: delete album");
             throw new ResourceNotFoundException();
         }
         else{
@@ -196,11 +223,13 @@ public class ListifyService {
                 }
             });
             repoCatalog.getAlbumRepository().delete(album);
+            logger.info("Album with id: '"+id+"' deleted successfully");
         }
     }
     public void deleteTrack(String id){
         var track = repoCatalog.getTrackRepository().getTrackBySpotifyId(id);
         if(track.isEmpty()){
+            logger.warn("Couldn't find the resource, Action: delete track");
             throw new ResourceNotFoundException();
         }
         else{
@@ -215,6 +244,7 @@ public class ListifyService {
             entity.setArtists(new ArrayList<>());
             repoCatalog.getTrackRepository().save(entity);
             repoCatalog.getTrackRepository().delete(entity);
+            logger.info("Track with id: '"+id+"' deleted successfully");
         }
     }
 }
