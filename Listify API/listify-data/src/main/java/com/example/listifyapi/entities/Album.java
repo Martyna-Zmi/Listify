@@ -1,6 +1,8 @@
 package com.example.listifyapi.entities;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,7 +16,7 @@ public class Album {
     private String releaseDate;
     private String image;
     @OneToMany(mappedBy = "album")
-    private List<Track> tracks;
+    private List<Track> tracks = new ArrayList<>();
 
     public void addTrack(Track track){
         this.tracks.add(track);

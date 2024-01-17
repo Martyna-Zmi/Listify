@@ -16,39 +16,41 @@
 </head>
 <body>
 <form action="#" th:action="@{'http://localhost:8080/listify/main'}" method="get">
-    <input type="submit" value="Back to main page">
+    <input class="back-button" type="submit" value="Back">
 </form>
-<h2>♬♪ Track details ♬♪</h2>
-<table class="table-main">
-    <thead>
-    <th></th>
-    <th>Name</th>
-    <th>Album</th>
-    <th>Artists</th>
-    <th>Length</th>
-    <th>Is Explicit?</th>
-    <th></th>
-    </thead>
-    <tbody>
-    <td><img th:src="${track.getImage()}" width="170" height="170"></td>
-    <td th:text="${track.getName()}"></td>
-    <td th:text="${track.getAlbum()}"></td>
-    <td th:text="${track.getPrettyArtists()}"></td>
-    <td th:text="${track.getLength()}"></td>
-    <td th:text="${track.getExplicitPretty()}"></td>
-    <td>
-        <form action="#" th:action="@{'http://localhost:8080/listify/update/track/'+${track.spotifyId}}" method="get">
-            <input type="submit" value="Update">
-        </form>
-        <form action="#" th:action="@{'http://localhost:8080/listify/tracks/'+${track.spotifyId}+'/delete'}" method="get">
-            <input type="submit" value="Delete">
-        </form>
-    </td>
-    </tbody>
-</table>
-<h5>✩ ♬ ₊˚.🎧⋆☾⋆⁺₊✧</h5>
-<p>Track's popularity is</p>
-<p th:text="${track.popularity}"></p>
-<p th:text="${track.popularityStats()}"></p>
+<div class="center-div">
+    <h2>♬♪ Track details ♬♪</h2>
+    <table class="table-main">
+        <thead>
+        <th></th>
+        <th>Name</th>
+        <th>Album</th>
+        <th>Artists</th>
+        <th>Length</th>
+        <th>Is Explicit?</th>
+        <th></th>
+        </thead>
+        <tbody>
+        <td><img th:src="${track.getImage()}" width="170" height="170"></td>
+        <td th:text="${track.getName()}"></td>
+        <td th:text="${track.getAlbum()}"></td>
+        <td th:text="${track.getPrettyArtists()}"></td>
+        <td th:text="${track.getLength()}"></td>
+        <td th:text="${track.getExplicitPretty()}"></td>
+        <td>
+            <form action="#" th:action="@{'http://localhost:8080/listify/update/track/'+${track.spotifyId}}" method="get">
+                <input type="submit" value="Update">
+            </form>
+            <form action="#" th:action="@{'http://localhost:8080/listify/tracks/'+${track.spotifyId}+'/delete'}" method="get">
+                <input type="submit" value="Delete">
+            </form>
+        </td>
+        </tbody>
+    </table>
+    <h5>✩ ♬ ₊˚.🎧⋆☾⋆⁺₊✧</h5>
+    <p>Track's popularity is</p>
+    <p th:text="${track.popularity}"></p>
+    <p th:text="${track.popularityStats()}"></p>
+</div>
 </body>
 </html>

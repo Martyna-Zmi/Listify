@@ -8,6 +8,6 @@ import java.util.ArrayList;
 @Data
 public class TopTracksDtoSp {
     @JsonProperty("tracks")
-    private ArrayList<TrackDtoSp> tracks;
+    private ArrayList<TrackDtoSp> tracks = new ArrayList<>();
 
 }

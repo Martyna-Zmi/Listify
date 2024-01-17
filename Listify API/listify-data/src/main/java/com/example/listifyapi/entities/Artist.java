@@ -2,6 +2,7 @@ package com.example.listifyapi.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,7 +18,7 @@ public class Artist {
     @JoinTable(name = "track_artist",
             joinColumns = { @JoinColumn(name = "JT1_artist_id") },
             inverseJoinColumns = { @JoinColumn(name = "JT1_track_id") })
-    private List<Track> tracks;
+    private List<Track> tracks = new ArrayList<>();
 
     public void setSpotifyId(String spotifyId) {
         this.spotifyId = spotifyId;

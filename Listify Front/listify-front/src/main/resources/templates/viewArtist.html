@@ -16,32 +16,34 @@
 </head>
 <body>
 <form action="#" th:action="@{'http://localhost:8080/listify/main'}" method="get">
-    <input type="submit" value="Back to main page">
+    <input class="back-button" type="submit" value="Back">
 </form>
-<h2>⋆⭒˚｡⋆🎸 Artist details 🎸⋆⭒˚｡⋆</h2>
-<table class="table-main" border="1">
-    <thead>
-    <th></th>
-    <th>Name</th>
-    <th>Genres</th>
-    <th></th>
-    </thead>
-    <tbody>
-    <td><img th:src="${artist.image}" width="170" height="170"></td>
-    <td th:text=" ${artist.name} "></td>
-    <td th:text=" ${artist.genres} "></td>
-    <td>
-        <form action="#" th:action="@{'http://localhost:8080/listify/update/artist/'+${artist.spotifyId}}" method="get">
-        <input type="submit" value="Update">
-    </form>
-        <form action="#" th:action="@{'http://localhost:8080/listify/artists/'+${artist.spotifyId}+'/delete'}" method="get">
-            <input type="submit" value="Delete">
-        </form>
-    </td>
-    </tbody>
-</table>
-<p>This artist's popularity is:</p>
-<p th:text="${artist.popularity}"></p>
-<p th:text="${artist.popularityStats()}"></p>
+<div class="center-div">
+    <h2>⋆⭒˚｡⋆🎸 Artist details 🎸⋆⭒˚｡⋆</h2>
+    <table class="table-main" border="1">
+        <thead>
+        <th></th>
+        <th>Name</th>
+        <th>Genres</th>
+        <th></th>
+        </thead>
+        <tbody>
+        <td><img th:src="${artist.image}" width="170" height="170"></td>
+        <td th:text=" ${artist.name} "></td>
+        <td th:text=" ${artist.genres} "></td>
+        <td>
+            <form action="#" th:action="@{'http://localhost:8080/listify/update/artist/'+${artist.spotifyId}}" method="get">
+                <input type="submit" value="Update">
+            </form>
+            <form action="#" th:action="@{'http://localhost:8080/listify/artists/'+${artist.spotifyId}+'/delete'}" method="get">
+                <input type="submit" value="Delete">
+            </form>
+        </td>
+        </tbody>
+    </table>
+    <p>This artist's popularity is:</p>
+    <p th:text="${artist.popularity}"></p>
+    <p th:text="${artist.popularityStats()}"></p>
+</div>
 </body>
 </html>

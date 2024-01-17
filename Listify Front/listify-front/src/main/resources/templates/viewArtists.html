@@ -7,30 +7,32 @@
 </head>
 <body>
 <form action="#" th:action="@{'http://localhost:8080/listify/main'}" method="get">
-  <input type="submit" value="Back to main page">
+  <input class="back-button" type="submit" value="Back">
 </form>
-<h2 class="main-header">♫ Artists ♫</h2>
-<table class="table-main" border="1">
-  <thead>
-  <th></th>
-  <th>Name</th>
-  <th>Genres</th>
-  <th>Popularity Rank</th>
-  <th></th>
-  </thead>
-  <tbody>
-  <tr th:each="artist : ${artists}">
-    <td><img th:src="${artist.image}" width="50" height="50"></td>
-    <td th:text="${artist.name}"></td>
-    <td th:text="${artist.genres}"></td>
-    <td th:text="${artist.popularityStats()}"></td>
-    <td>
-      <form action="#" th:action="@{'http://localhost:8080/listify/artists/'+${artist.spotifyId}}" method="get">
-        <input type="submit" value="Details">
-      </form>
-    </td>
-  </tr>
-  </tbody>
-</table>
+<div class="center-div">
+  <h2 class="main-header">♫ Artists ♫</h2>
+  <table class="table-main" border="1">
+    <thead>
+    <th></th>
+    <th>Name</th>
+    <th>Genres</th>
+    <th>Popularity Rank</th>
+    <th></th>
+    </thead>
+    <tbody>
+    <tr th:each="artist : ${artists}">
+      <td><img th:src="${artist.image}" width="50" height="50"></td>
+      <td th:text="${artist.name}"></td>
+      <td th:text="${artist.genres}"></td>
+      <td th:text="${artist.popularityStats()}"></td>
+      <td>
+        <form action="#" th:action="@{'http://localhost:8080/listify/artists/'+${artist.spotifyId}}" method="get">
+          <input type="submit" value="Details">
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
 </body>
 </html>

@@ -46,7 +46,6 @@ public class Mapper implements IMapper {
         track.setSpotifyId(dto.getSpotifyId());
         track.setDurationMs(dto.getDurationMs());
         track.setIsExplicit(dto.isExplicit());
-        track.setSpotifyUrl(dto.getSpotifyUrl());
         track.setName(dto.getName());
         track.setAlbum(mapAlbum(dto.getAlbum()));
         track.setPopularity(dto.getPopularity());

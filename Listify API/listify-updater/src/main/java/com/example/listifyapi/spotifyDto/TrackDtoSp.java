@@ -3,6 +3,7 @@ package com.example.listifyapi.spotifyDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -24,5 +25,5 @@ public class TrackDtoSp {
     @JsonProperty("track_number")
     private int trackNumberOnAlbum;
     @JsonProperty("artists")
-    private List<ArtistDtoSp> artists;
+    private List<ArtistDtoSp> artists = new ArrayList<>();
 }

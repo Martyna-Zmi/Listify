@@ -16,59 +16,60 @@
 </head>
 <body>
 <form action="#" th:action="@{'http://localhost:8080/listify/main'}" method="get">
-  <input type="submit" value="Back to main page">
+  <input class="back-button" type="submit" value="Back">
 </form>
-<h2>📀 Album details 📀</h2>
-<table class="table-main">
-  <thead>
-  <th></th>
-  <th>Name</th>
-  <th>Total songs</th>
-  <th>Release date</th>
-  <th>Type</th>
-  <td></td>
-  </thead>
-  <tbody>
-  <td><img th:src="${album.image}" width="170" height="170"></td>
-  <td th:text="${album.name}"></td>
-  <td th:text="${album.totalTracks}"></td>
-  <td th:text="${album.releaseDate}"></td>
-  <td th:text="${album.albumType}"></td>
-  <td>
-    <form action="#" th:action="@{'http://localhost:8080/listify/update/album/'+${album.spotifyId}}" method="get">
-    <input type="submit" value="Update">
-  </form>
-    <form action="#" th:action="@{'http://localhost:8080/listify/albums/'+${album.spotifyId}+'/delete'}" method="get">
-      <input type="submit" value="Delete">
-    </form>
-  </td>
-  </tbody>
-</table>
-<h2>♫ Tracks on album:♫ </h2>
-<table class="table-main" border="1">
-
-  <thead>
-  <th>---</th>
-  <th>Name</th>
-  <th>Artists</th>
-  <th>Album</th>
-  <th>Explicit?</th>
-  <th></th>
-  </thead>
-  <tbody>
-  <tr th:each="track : ${tracks}">
-    <td><img th:src="${track.getImage()}" width="50" height="50"></td>
-    <td th:text="${track.getName()}"></td>
-    <td th:text="${track.getPrettyArtists()}"></td>
-    <td th:text="${track.getAlbum()}"></td>
-    <td th:text="${track.getExplicitPretty()}"></td>
+<div class="center-div">
+  <h2>📀 Album details 📀</h2>
+  <table class="table-main">
+    <thead>
+    <th></th>
+    <th>Name</th>
+    <th>Total songs</th>
+    <th>Release date</th>
+    <th>Type</th>
+    <td></td>
+    </thead>
+    <tbody>
+    <td><img th:src="${album.image}" width="170" height="170"></td>
+    <td th:text="${album.name}"></td>
+    <td th:text="${album.totalTracks}"></td>
+    <td th:text="${album.releaseDate}"></td>
+    <td th:text="${album.albumType}"></td>
     <td>
-      <form action="#" th:action="@{'http://localhost:8080/listify/tracks/'+${track.spotifyId}}" method="get">
-        <input type="submit" value="view details">
+      <form action="#" th:action="@{'http://localhost:8080/listify/update/album/'+${album.spotifyId}}" method="get">
+        <input type="submit" value="Update">
+      </form>
+      <form action="#" th:action="@{'http://localhost:8080/listify/albums/'+${album.spotifyId}+'/delete'}" method="get">
+        <input type="submit" value="Delete">
       </form>
     </td>
-  </tr>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+  <h2>♫ Tracks on album:♫ </h2>
+  <table class="table-main">
+    <thead>
+    <th>---</th>
+    <th>Name</th>
+    <th>Artists</th>
+    <th>Album</th>
+    <th>Explicit?</th>
+    <th></th>
+    </thead>
+    <tbody>
+    <tr th:each="track : ${tracks}">
+      <td><img th:src="${track.getImage()}" width="50" height="50"></td>
+      <td th:text="${track.getName()}"></td>
+      <td th:text="${track.getPrettyArtists()}"></td>
+      <td th:text="${track.getAlbum()}"></td>
+      <td th:text="${track.getExplicitPretty()}"></td>
+      <td>
+        <form action="#" th:action="@{'http://localhost:8080/listify/tracks/'+${track.spotifyId}}" method="get">
+          <input type="submit" value="view details">
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
 </body>
 </html>

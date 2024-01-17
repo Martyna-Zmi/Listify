@@ -1,6 +1,8 @@
 package com.example.listifyapi.entities;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,7 +18,7 @@ public class Track {
     @JoinColumn(name = "album")
     private Album album;
     @ManyToMany(mappedBy = "tracks",cascade = CascadeType.ALL)
-    private List<Artist> artists;
+    private List<Artist> artists = new ArrayList<>();
 
     public String getName() {
         return name;

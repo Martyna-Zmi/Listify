@@ -57,13 +57,7 @@ public class Updater {
             String id = trackDtos.get(i).getAlbum().getSpotifyId();
             Album tempAlbum = albums.stream().filter(album -> id.equals(album.getSpotifyId())).findFirst().orElse(null);
             tracks.get(i).setAlbum(tempAlbum);
-            if(tempAlbum.getTracks()==null){
-                var placeholderTracks = new ArrayList<Track>();
-                tempAlbum.setTracks(placeholderTracks);
-            }
-            var tempTracks = new ArrayList<>(tempAlbum.getTracks());
-            tempTracks.add(tracks.get(i));
-            tempAlbum.setTracks(tempTracks);
+            tempAlbum.getTracks().addAll(tempAlbum.getTracks());
             tempAlbum.setTotalTracks(tempAlbum.getTotalTracks()+1);
             repoCatalog.getAlbumRepository().save(tempAlbum);
         }
@@ -71,22 +65,10 @@ public class Updater {
             final Track track = tracks.get(i);
             List<String> artistIdsDuplicates = trackDtos.get(i).getArtists().stream().map(ArtistDtoSp::getSpotifyId).toList();
             final List<String> artistIds = artistIdsDuplicates.stream().distinct().toList();
-            if(tracks.get(i).getArtists()==null){
-                var placeholderArtists = new ArrayList<Artist>();
-                track.setArtists(placeholderArtists);
-            }
             artists.forEach(artist -> {
-              if(artist.getTracks()==null){
-                  var placeholderTracks = new ArrayList<Track>();
-                  artist.setTracks(placeholderTracks);
-              }
               if(artistIds.contains(artist.getSpotifyId())){
-                  var tempTrack = new ArrayList<>(artist.getTracks());
-                  tempTrack.add(track);
-                  artist.setTracks(tempTrack);
-                  var tempArtists = new ArrayList<Artist>(track.getArtists());
-                  tempArtists.add(artist);
-                  track.setArtists(tempArtists);
+                  artist.getTracks().add(track);
+                  track.getArtists().add(artist);
               }
             });
         }

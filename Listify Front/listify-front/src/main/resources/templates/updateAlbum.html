@@ -7,31 +7,33 @@
 </head>
 <body>
 <form action="#" th:action="@{'http://localhost:8080/listify/main'}" method="get">
-  <input type="submit" value="Back to main page">
+  <input class="back-button" type="submit" value="Back">
 </form>
-<h2>♫ Edit Album info♫ </h2>
-<form action="#" th:action="@{'http://localhost:8080/listify/update/album/'+${album.spotifyId}}" th:object="${album}" method="post">
-  <fieldset>
-    <legend>Info</legend>
-    <label>Name:</label>
-    <input type="text" th:field="*{name}" id="name" required>
-    <br>
-    <label>Type:</label>
-    <select th:field="*{albumType}" required>
-      <option value="album">Album</option>
-      <option value="single">Single</option>
-    </select>
-    <br>
-    <label>Image link:</label>
-    <input type="text" th:field="*{image}" id="image" required>
-    <br>
-    <label>Release date</label>
-    <input type="date" th:field="*{releaseDate}" required>
-    <br>
-    <input type="hidden" th:field="*{spotifyId}">
-    <input type="hidden" th:field="*{totalTracks}">
-    <input type="submit" value="Update" id="add">
-  </fieldset>
-</form>
+<div class="center-div">
+  <h2>♫ Edit Album info♫ </h2>
+  <form action="#" th:action="@{'http://localhost:8080/listify/update/album/'+${album.spotifyId}}" th:object="${album}" method="post">
+    <fieldset>
+      <legend>Info</legend>
+      <label>Name:</label>
+      <input type="text" th:field="*{name}" id="name" required>
+      <br>
+      <label>Type:</label>
+      <select th:field="*{albumType}" required>
+        <option value="album">Album</option>
+        <option value="single">Single</option>
+      </select>
+      <br>
+      <label>Image link:</label>
+      <input type="text" th:field="*{image}" id="image" required>
+      <br>
+      <label>Release date</label>
+      <input type="date" th:field="*{releaseDate}" required>
+      <br>
+      <input type="hidden" th:field="*{spotifyId}">
+      <input type="hidden" th:field="*{totalTracks}">
+      <input type="submit" value="Update" id="add">
+    </fieldset>
+  </form>
+</div>
 </body>
 </html>
