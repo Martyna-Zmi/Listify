@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <link th:href="@{/mainView.css}" rel="stylesheet" />
+</head>
+<body>
+<div class="center-div">
+    <h1>&#128165 &#128165 &#128165</h1>
+    <h2>Something went wrong...</h2>
+    <p>Reason:</p>
+    <p th:text="${param.error}"></p>
+    <form action="#" th:action="@{'http://localhost:8080/listify/main'}" method="get">
+        <input class="back-button" type="submit" value="Back to main page">
+    </form>
+</div>
+</body>
+</html>

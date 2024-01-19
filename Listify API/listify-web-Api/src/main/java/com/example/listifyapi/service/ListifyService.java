@@ -43,7 +43,8 @@ public class ListifyService {
     public TrackDto getTrackById(String id){
         var entity = repoCatalog.getTrackRepository().getTrackBySpotifyId(id);
         if(entity.isEmpty()){
-            logger.warn("Couldn't find the resource, Action: get track");
+            logger.info("Currently no such resource: track "+id);
+
             throw new ResourceNotFoundException();
         }
         return dtoMapper.mapTrack(entity.get());
@@ -74,7 +75,7 @@ public class ListifyService {
     public ArtistDto getArtistById(String id){
         var entity = repoCatalog.getArtistRepository().getArtistBySpotifyId(id);
         if(entity.isEmpty()){
-            logger.warn("Couldn't find the resource, Action: get artist");
+            logger.info("Currently no such resource: artist "+id);
             throw new ResourceNotFoundException();
         }
         return dtoMapper.mapArtist(entity.get());
@@ -161,7 +162,7 @@ public class ListifyService {
     public AlbumDto getAlbumById(String id){
         var entity = repoCatalog.getAlbumRepository().findBySpotifyId(id);
         if(entity.isEmpty()){
-            logger.warn("Couldn't find the resource, Action get album");
+            logger.info("Currently no such resource: album "+id);
             throw new ResourceNotFoundException();
         }
         return dtoMapper.mapAlbum(entity.get());

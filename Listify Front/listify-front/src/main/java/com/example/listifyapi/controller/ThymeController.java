@@ -7,7 +7,9 @@ import com.example.listifyapi.service.FrontService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("listify/")
@@ -23,6 +25,10 @@ public class ThymeController {
         model.addAttribute("randomSong", frontService.randomTrack());
         return "index";
     }
+    @GetMapping("error")
+    public String error(RedirectAttributes redirectAttributes){
+        return "errorPage";
+    }
     //Tracks
     @GetMapping("tracks/{id}")
     public String trackById(@PathVariable("id")String id, Model model){
@@ -37,7 +43,7 @@ public class ThymeController {
         return "saveTrack";
     }
     @RequestMapping (value = "save/track", method = RequestMethod.POST)
-    public String addTrack(@ModelAttribute TrackDto track, Model model){
+    public String addTrack(@ModelAttribute TrackDto track, Model model, BindingResult result) {
         frontService.saveTrack(track);
         return ("redirect:/listify/tracks/"+track.getSpotifyId());
     }

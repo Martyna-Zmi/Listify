@@ -24,7 +24,7 @@ public class TrackDto {
     }
     public String getExplicitPretty(){
         if(isExplicit){
-            return "⛔";
+            return "&#128286";
         }
         else return "\uD83C\uDF3C";
     }

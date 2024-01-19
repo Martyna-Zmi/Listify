@@ -10,7 +10,7 @@
   <input class="back-button" type="submit" value="Back">
 </form>
 <div class="center-div">
-  <h2>♫ Update Track ♫</h2>
+  <h2>&#127926 Update Track &#127926</h2>
   <form action="#" th:action="@{'http://localhost:8080/listify/update/track/'+${track.spotifyId}}" th:object="${track}" method="post">
     <fieldset>
       <legend>Info</legend>
@@ -20,12 +20,6 @@
       <label>Duration:</label>
       <input type="number" required th:field="*{durationMs}">
       <label><b>In MILLISECONDS</b></label>
-      <br>
-      <label>Is explicit?:</label>
-      <select id="explicit" name="explicit" required>
-        <option value="true">true</option>
-        <option value="false">false</option>
-      </select>
       <br>
       <label>Image link</label>
       <input type="text" th:field="*{image}" required>

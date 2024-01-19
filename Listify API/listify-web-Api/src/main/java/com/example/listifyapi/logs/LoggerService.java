@@ -14,4 +14,10 @@ public class LoggerService {
     public InputStreamResource getLogFile() throws IOException{
         return new InputStreamResource(new FileInputStream(file));
     }
+    public String getFileName(){
+        return file.getName();
+    }
+    public long getFileLength(){
+        return file.length();
+    }
 }

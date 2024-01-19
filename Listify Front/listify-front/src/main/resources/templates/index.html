@@ -4,32 +4,57 @@
     <meta charset="UTF-8">
     <title>Listify</title>
     <link th:href="@{/mainView.css}" rel="stylesheet" />
+    <style>
+        table, th, td {
+            text-align:center;
+            border: none;
+        }
+        th, td {
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
 <div class="center-div">
-    <h2 class="main-header">Listify</h2>
+    <h1 class="main-header">Listify</h1>
     <h4>Songs against boredom</h4>
     <br>
-    <form action="#" th:action="@{'http://localhost:8080/listify/viewTracks'}" method="get">
-        <input type="submit" value="All tracks">
-    </form>
-    <form action="#" th:action="@{'http://localhost:8080/listify/viewArtists'}" method="get">
-        <input type="submit" value="All artists">
-    </form>
-    <form action="#" th:action="@{'http://localhost:8080/listify/viewAlbums'}" method="get">
-        <input type="submit" value="All albums">
-    </form>
+    <table>
+        <td>
+            <form action="#" th:action="@{'http://localhost:8080/listify/viewTracks'}" method="get">
+                <input type="submit" value="All tracks">
+            </form>
+        </td>
+        <td>
+            <form action="#" th:action="@{'http://localhost:8080/listify/viewArtists'}" method="get">
+                <input type="submit" value="All artists">
+            </form>
+        </td>
+        <td>
+            <form action="#" th:action="@{'http://localhost:8080/listify/viewAlbums'}" method="get">
+                <input type="submit" value="All albums">
+            </form>
+        </td>
+    </table>
     <h5>♫⋆｡♪ ₊˚♬ ﾟ.♫⋆｡♪ ₊˚♬ ﾟ.♫⋆｡♪ ₊˚♬ ﾟ.</h5>
-    <h3>Random Track:</h3>
-    <img th:src="${randomSong.image}" width="100" height="100">
-    <h4 th:text="${randomSong.getName()}"></h4>
-    <p><a th:href="@{'http://localhost:8080/listify/tracks/'+${randomSong.getSpotifyId()}}">See more</a></p>
-    <br>
-    <h5>♫⋆｡♪ ₊˚♬ ﾟ.♫⋆｡♪ ₊˚♬ ﾟ.♫⋆｡♪ ₊˚♬ ﾟ.</h5>
-    <h3>Random Artist:</h3>
-    <img th:src="${randomArtist.image}" width="100" height="100">
-    <h4 th:text="${randomArtist.getName()}"></h4>
-    <p><a th:href="@{'http://localhost:8080/listify/artists/'+${randomArtist.getSpotifyId()}}">See more</a></p>
+    <table>
+        <thead>
+        <th> <h3>&#128266 Random Track: &#128266</h3></th>
+        <th><h3> &#127930 Random Artist: &#127930</h3></th>
+        </thead>
+        <tbody>
+        <td>
+            <img th:src="${randomSong.image}" width="100" height="100">
+            <h4 th:text="${randomSong.getName()}"></h4>
+            <p><a th:href="@{'http://localhost:8080/listify/tracks/'+${randomSong.getSpotifyId()}}">See more</a></p>
+        </td>
+        <td>
+            <img th:src="${randomArtist.image}" width="100" height="100">
+            <h4 th:text="${randomArtist.getName()}"></h4>
+            <p><a th:href="@{'http://localhost:8080/listify/artists/'+${randomArtist.getSpotifyId()}}">See more</a></p>
+        </td>
+        </tbody>
+    </table>
     <h5>♫⋆｡♪ ₊˚♬ ﾟ.♫⋆｡♪ ₊˚♬ ﾟ.♫⋆｡♪ ₊˚♬ ﾟ.</h5>
     <h2>Add data</h2>
     <a href="http://localhost:8080/listify/save/artist">Add Artist</a>
