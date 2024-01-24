@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Listify Front.iml" filepath="$PROJECT_DIR$/.idea/Listify Front.iml" />
-      <module fileurl="file://$PROJECT_DIR$/listify-front/listify.iml" filepath="$PROJECT_DIR$/listify-front/listify.iml" />
     </modules>
   </component>
 </project>

@@ -25,7 +25,7 @@ import java.util.Random;
 
 @Service
 @Component
-public class ListifyService {
+public class ListifyService implements IListifyService{
     private static final Logger logger = LoggerFactory.getLogger(ListifyService.class);
     private final RepoCatalog repoCatalog;
     private final IDtoMapper dtoMapper;

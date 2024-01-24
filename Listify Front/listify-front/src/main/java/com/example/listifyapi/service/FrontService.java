@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 @Service
 @Component
-public class FrontService {
+public class FrontService implements IFrontService{
     private final RestClient restClient = RestClient.create();
     private final String URL = "http://localhost:8081/listify/";
     public List<TrackDto> findAllTracks(){
